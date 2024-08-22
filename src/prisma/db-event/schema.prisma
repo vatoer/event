@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  //output   = "../../../node_modules/@prisma-eventdb/client"
+
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Rsvp      Rsvp[]
+
+  @@map("users")
+}
+
+model Guest {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  firstName String?  @map("first_name")
+  lastName  String?  @map("last_name")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Rsvp      Rsvp[]
+
+  @@map("guests")
+}
+
+enum Response {
+  YES
+  NO
+  MAYBE
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  date        DateTime
+  location    String?
+  userId      String   @map("user_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  Rsvp        Rsvp[]
+
+  @@map("events")
+}
+
+model Rsvp {
+  id        String   @id
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @map("user_id")
+  guest     Guest    @relation(fields: [guestId], references: [id])
+  guestId   String   @map("guest_id")
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String
+  status    String
+  response  Response
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("rsvps")
+}
