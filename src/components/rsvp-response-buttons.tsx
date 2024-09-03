@@ -1,7 +1,7 @@
 "use client";
 import { RsvpResponse } from "@prisma/client";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface RsvpResponseButtonsProps {
@@ -9,29 +9,39 @@ interface RsvpResponseButtonsProps {
         text: string;
         rsvpResponse: RsvpResponse;
       }[];
-      initialRsvpResponse: RsvpResponse;
-}
+      selectedOption: string | null;
+      setSelectedOption: (option: string) => void;}
 
 const RsvpResponseButtons = ({
     options,
-    initialRsvpResponse,
+    selectedOption,
+    setSelectedOption,
 }: RsvpResponseButtonsProps) => {
-    const [selectedOption, setSelectedOption] = useState<string | null>(initialRsvpResponse);
+    const touchHandled = useRef(false);
 
     const handleClick = (option: string) => {
-      setSelectedOption(option);
+        if (!touchHandled.current) {
+            setSelectedOption(option);
+          }
+          touchHandled.current = false; // Reset the flag after handling click
     };
+
+    const handleTouchEnd = (option: string) => {
+        touchHandled.current = true;
+        setSelectedOption(option);
+      };
 
     return (
         <div className="w-full flex flex-col items-center p-2">
           <div className="flex flex-col gap-2 w-full">
             {options.map((option) => (
-              <Button
-                variant={"outline"}
+              <button
+                //variant={"outline"}
                 key={option.text}
                 onClick={() => handleClick(option.rsvpResponse)}
+                onTouchEnd={() => handleTouchEnd(option.rsvpResponse)}
                 className={cn(
-                    "w-full p-2 rounded-md transition-colors hover:bg-red-300 hover:text-white",
+                    "w-full p-2 rounded-md border border-customRed transition-colors sm:hover:bg-red-300 sm:hover:text-white",
                     selectedOption === option.rsvpResponse
                         ? "bg-customRed text-white"
                         : "")
@@ -39,11 +49,8 @@ const RsvpResponseButtons = ({
                 
               >
                 {option.text}
-              </Button>
+              </button>
             ))}
-            <Button>
-                Submit
-            </Button>
           </div>
         </div>
       );
