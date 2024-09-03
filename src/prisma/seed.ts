@@ -4,6 +4,12 @@ import { User } from "@prisma/client";
 import { hash } from "bcryptjs";
 
 async function main() {
+
+    await prisma.rsvp.deleteMany();
+    await prisma.guest.deleteMany();
+    await prisma.event.deleteMany();
+    await prisma.user.deleteMany();
+    
     const password = await hash("password", 10);
     const user: User = await prisma.user.create({
         data: {
@@ -27,6 +33,9 @@ async function main() {
     const guest = await prisma.guest.create({
         data: {
         name: "Guest Name",
+        prefix: "Mr",
+        firstName: "Guest",
+        lastName: "Name",
         email: "guest@gmail.com",
         },
     });

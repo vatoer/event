@@ -167,3 +167,13 @@ pnpm build
 pm2 start pnpm --name "event-app" -- start --port 3000
 pm2 start pnpm --name "event-app" -- start --port 3001
 ```
+
+### summary 
+
+```sh
+git pull
+pnpm install
+pnpm build
+pnpm prisma db push --schema=./src/prisma/db-event/schema.prisma
+pm2 restart event-app
+```
