@@ -7,7 +7,6 @@
 generator client {
   provider = "prisma-client-js"
   //output   = "../../../node_modules/@prisma-eventdb/client"
-
 }
 
 datasource db {
@@ -28,20 +27,24 @@ model User {
 }
 
 model Guest {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String
-  firstName String?  @map("first_name")
-  lastName  String?  @map("last_name")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  Rsvp      Rsvp[]
+  id          String   @id @default(cuid())
+  name        String?
+  prefix      String?
+  firstName   String?  @map("first_name")
+  lastName    String?  @map("last_name")
+  profession  String?
+  institution String?
+  email       String   @unique
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  Rsvp        Rsvp[]
 
   @@map("guests")
 }
 
 enum RsvpResponse {
   YES
+  REPRESENTEDBY
   NO
   MAYBE
 }
@@ -63,18 +66,18 @@ model Event {
 }
 
 model Rsvp {
-  id        String   @id
-  user      User?     @relation(fields: [userId], references: [id])
-  userId    String?   @map("user_id")
-  guest     Guest    @relation(fields: [guestId], references: [id])
-  guestId   String   @map("guest_id")
-  event     Event    @relation(fields: [eventId], references: [id])
-  eventId   String
-  attending Boolean?
-  attendingAt DateTime? @map("attending_at")
-  rsvpResponse  RsvpResponse? @map("rsvp_response")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id           String        @id
+  user         User?         @relation(fields: [userId], references: [id])
+  userId       String?       @map("user_id")
+  guest        Guest         @relation(fields: [guestId], references: [id])
+  guestId      String        @map("guest_id")
+  event        Event         @relation(fields: [eventId], references: [id])
+  eventId      String
+  attending    Boolean?
+  attendingAt  DateTime?     @map("attending_at")
+  rsvpResponse RsvpResponse? @map("rsvp_response")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
 
   @@map("rsvps")
 }

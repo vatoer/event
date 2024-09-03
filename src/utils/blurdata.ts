@@ -1,6 +1,6 @@
 export const blurName = (name: string) => {
     return name.split("").map((char, i) => {
-        if (i < 2) {
+        if (i < 3) {
             return char;
         }
         return "*";

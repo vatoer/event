@@ -21,8 +21,7 @@ const EventWrapper = ({ event }: EventWrapperProps) => {
       </div>
 
       <div className="w-full items-center justify-center flex flex-col px-2 my-4">
-        <span>Date: {formattedDate}</span>
-        <span>Time: {formattedTime}</span>
+        <span>Date/Time: {formattedDate} / {formattedTime}</span>        
         <span>Venue: {event.location}</span>
       </div>
     </>
