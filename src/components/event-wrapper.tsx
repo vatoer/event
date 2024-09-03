@@ -11,7 +11,7 @@ const EventWrapper = ({ event }: EventWrapperProps) => {
   return (
     <>
       <div className="w-full items-center text-sm justify-center flex-col font-semibold leading-5 sm:leading-7 text-gray-900 sm:truncate sm:tracking-tight text text-center">
-        <h1 className="m-2 text-xl">RSVP FORM</h1>
+        <h1 className="m-2">RSVP FORM</h1>
         <h1 className="">DIPLOMATIC RECEPTION</h1>
         <h1>COMMEMORATING</h1>
         <h1>

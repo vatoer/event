@@ -39,6 +39,9 @@ const RsvpResponseWrapper = ({
 
   const [representedBy, setRepresentedBy] = useState<string | null>(null);
   const handleOnRepresentedBy = async() => {
+    if(!representedBy) {
+      alert("Please fill a name in the field");
+      return};
     setIsEditing(false);
     // submit form
     const rsvp = await responseRsvp(id, RsvpResponse.REPRESENTEDBY, representedBy?.trim());
@@ -84,7 +87,7 @@ const RsvpResponseWrapper = ({
                 <div className="w-full flex flex-col items-center p-2">
                   <input
                     type="text"
-                    placeholder="Name"
+                    placeholder="Represented by"
                     value={representedBy ?? ""}
                     onChange={(e) => setRepresentedBy(e.target.value)}
                     className="w-full p-2 border border-customRed rounded-md"

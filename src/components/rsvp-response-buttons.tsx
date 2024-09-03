@@ -36,9 +36,15 @@ const RsvpResponseButtons = ({
   return (
     <div className="w-full flex flex-col items-center p-2">
       <div className="flex flex-col gap-2 w-full">
+        <RsvpResponseButton
+          option={rsvpResponseOptions.yes}
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+          className="w-full p-4 my-2"
+        />
         <div className="flex flex-row w-full gap-2">
           <RsvpResponseButton
-            option={rsvpResponseOptions.yes}
+            option={rsvpResponseOptions.representedBy}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
             className="w-1/2"
@@ -55,16 +61,7 @@ const RsvpResponseButtons = ({
             setSelectedOption={setSelectedOption}
             className="w-1/4"
           />
-          
         </div>
-        <RsvpResponseButton
-            option={rsvpResponseOptions.representedBy}
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-            className="w-full"
-          />
-
-        
       </div>
     </div>
   );

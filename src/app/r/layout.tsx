@@ -9,22 +9,22 @@ const RsvpLayout = ({ children }: { children: React.ReactNode }) => {
             <Image
               src="/images/logo-sekunder-warna.png"
               alt="Ambassade de Indonesie"
-              width={75}
-              height={75}
+              width={52}
+              height={52}
             />
           </div>
           <div className="w-1/3 flex justify-center items-center">
             <Image
               src="/images/logo-garuda.png"
               alt="Ambassade de Indonesie"
-              width={75}
-              height={75}
+              width={52}
+              height={52}
             />
           </div>
         </div>
 
         <div className="flex-grow">{children}</div>
-        <div className="absolute bottom-0 right-0 w-full">
+        {/* <div className="absolute bottom-0 right-0 w-full">
         <Image
             src="/images/elemen-grafis-5x1-putih.png"
             alt="Ambassade de Indonesie"
@@ -33,7 +33,7 @@ const RsvpLayout = ({ children }: { children: React.ReactNode }) => {
             height={50}
             className="w-full md:w-auto"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );
