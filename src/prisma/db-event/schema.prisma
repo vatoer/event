@@ -71,6 +71,7 @@ model Rsvp {
   userId       String?       @map("user_id")
   guest        Guest         @relation(fields: [guestId], references: [id])
   guestId      String        @map("guest_id")
+  representedBy String?       @map("represented_by")
   event        Event         @relation(fields: [eventId], references: [id])
   eventId      String
   attending    Boolean?

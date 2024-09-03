@@ -3,6 +3,7 @@ import { RsvpResponse } from "@prisma/client";
 import RsvpResponseButtons from "./rsvp-response-buttons";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import responseRsvp from "@/actions/rsvp";
 
 interface RsvpResponseWrapperProps {
   id: string;
@@ -27,6 +28,22 @@ const RsvpResponseWrapper = ({
     { text: "Yes, Represented by", rsvpResponse: RsvpResponse.REPRESENTEDBY },
   ];
 
+  const handleOnSelect = async (option: string) => {
+    setSelectedOption(option);
+    if (option !== RsvpResponse.REPRESENTEDBY) {
+      setIsEditing(false);
+      // submit form
+      const rsvp = await responseRsvp(id, option as RsvpResponse);
+    }
+  }
+
+  const [representedBy, setRepresentedBy] = useState<string | null>(null);
+  const handleOnRepresentedBy = async() => {
+    setIsEditing(false);
+    // submit form
+    const rsvp = await responseRsvp(id, RsvpResponse.REPRESENTEDBY, representedBy?.trim());
+  }
+
   return (
     <div className="flex flex-col w-full mt-2">
       {rsvpResponse && (
@@ -46,7 +63,11 @@ const RsvpResponseWrapper = ({
 
       <div className="flex flex-col p-2">
         {!isEditing && (
-          <Button className="w-full" variant={"outline"} onClick={() => setIsEditing(!isEditing)}>
+          <Button
+            className="w-full"
+            variant={"outline"}
+            onClick={() => setIsEditing(!isEditing)}
+          >
             Edit
           </Button>
         )}
@@ -56,16 +77,29 @@ const RsvpResponseWrapper = ({
             <RsvpResponseButtons
               options={options}
               selectedOption={selectedOption}
-              setSelectedOption={setSelectedOption}
+              setSelectedOption={handleOnSelect}
             />
-            <div className="w-full flex flex-col items-center p-2">
-              <Button
-                className="w-full"
-                onClick={() => setIsEditing(!isEditing)}
-              >
-                Submit
-              </Button>
-            </div>
+            {selectedOption === RsvpResponse.REPRESENTEDBY && (
+              <>
+                <div className="w-full flex flex-col items-center p-2">
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    value={representedBy ?? ""}
+                    onChange={(e) => setRepresentedBy(e.target.value)}
+                    className="w-full p-2 border border-customRed rounded-md"
+                  />
+                </div>
+                <div className="w-full flex flex-col items-center p-2">
+                  <Button
+                    className="w-full"
+                    onClick={handleOnRepresentedBy}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </>
+            )}
           </>
         )}
       </div>

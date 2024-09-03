@@ -4,40 +4,38 @@ import { Button } from "./ui/button";
 import { RsvpResponse } from "@prisma/client";
 
 interface RsvpResponseButtonProps {
-  rsvpId: string;
-  text: string;
-  value: RsvpResponse;
-  isSelected?: boolean;
-  onClickResponse?: (value: RsvpResponse) => void;
+  setSelectedOption: (option: string) => void;
+  selectedOption: string | null;
+  option: {
+    text: string;
+    rsvpResponse: RsvpResponse;
+  };
+  className?: string;
 }
 
 const RsvpResponseButton = ({
-  rsvpId,
-  text,
-  value,
-  isSelected,
-  onClickResponse,
+  setSelectedOption,
+  selectedOption,
+  option,
+  className
 }: RsvpResponseButtonProps) => {
-  const handleClick = async () => {
-    onClickResponse && onClickResponse(value);
-    // console.log(value);
-    // const rsvpResponse = await responseRsvp(rsvpId,value);
-    // if (rsvpResponse.success) {
-    //     onClickResponse && onClickResponse(value);
-    //     console.log(rsvpResponse.data.value);
-    // } else {
-    //     console.log("Error");
-    // }
+  const handleClick = (rsvpResponse: string) => {
+    setSelectedOption(rsvpResponse);
   };
 
   return (
-    <Button
-      variant={"outline"}
-      className={cn("w-full", isSelected && "bg-red-500")}
-      onClick={handleClick}
+    <button
+      //variant={"outline"}
+      key={option.text}
+      onClick={() => handleClick(option.rsvpResponse)}
+      className={cn(
+        "p-2  rounded-md border border-customRed transition-colors sm:hover:bg-red-300 sm:hover:text-white",
+        className,
+        selectedOption === option.rsvpResponse ? "bg-customRed text-white" : ""
+      )}
     >
-      {text}
-    </Button>
+      {option.text}
+    </button>
   );
 };
 

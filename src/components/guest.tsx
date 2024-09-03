@@ -1,30 +1,35 @@
-import { Guest } from "@prisma/client";
+import { Guest, Rsvp } from "@prisma/client";
 import { blurEmail, blurName } from "@/utils/blurdata";
 
-
 interface GuestWrapperProps {
-    guest: Guest;
-    blur?: boolean;
+  guest: Guest;
+  rsvp: Rsvp;
+  blur?: boolean;
 }
 
 const blurGuest = (guest: Guest) => {
-    return {
-        ...guest,
-        name: `${guest.prefix ?? ""} ${blurName(guest.firstName ?? "")} ${blurName(guest.lastName ?? "")}`,
-        email: blurEmail(guest.email),
-    };
-}
+  return {
+    ...guest,
+    name: `${guest.prefix ?? ""} ${blurName(guest.firstName ?? "")} ${blurName(
+      guest.lastName ?? ""
+    )}`,
+    email: blurEmail(guest.email),
+  };
+};
 
-const GuestWrapper = ({guest,blur}:GuestWrapperProps) => {
-    if (blur) {
-        guest = blurGuest(guest);
-    }
-    return ( 
-        <div className="w-full items-center justify-center flex flex-col mt-2 border-customRed border-x-0 border-2">
-            <div>{guest.name}</div>
-            <div>{guest.email}</div>
-        </div>
-     );
-}
- 
+const GuestWrapper = ({ guest, blur, rsvp }: GuestWrapperProps) => {
+  if (blur) {
+    guest = blurGuest(guest);
+  }
+  return (
+    <div className="w-full items-center justify-center flex flex-col mt-2 border-customRed border-x-0 border-2">
+      <div>{guest.name}</div>
+      <div>{guest.email}</div>
+      {rsvp.rsvpResponse === "REPRESENTEDBY" && (
+        <div>Represented By: {rsvp.representedBy}</div>
+      )}
+    </div>
+  );
+};
+
 export default GuestWrapper;

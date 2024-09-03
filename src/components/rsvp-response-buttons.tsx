@@ -3,6 +3,7 @@ import { RsvpResponse } from "@prisma/client";
 import { Button } from "./ui/button";
 import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import RsvpResponseButton from "./rsvp-response-button";
 
 interface RsvpResponseButtonsProps {
   options: {
@@ -22,24 +23,48 @@ const RsvpResponseButtons = ({
     setSelectedOption(option);
   };
 
+  const rsvpResponseOptions = {
+    yes: { text: "Yes, I will attend", rsvpResponse: RsvpResponse.YES },
+    no: { text: "No", rsvpResponse: RsvpResponse.NO },
+    maybe: { text: "Maybe", rsvpResponse: RsvpResponse.MAYBE },
+    representedBy: {
+      text: "Yes, Represented by",
+      rsvpResponse: RsvpResponse.REPRESENTEDBY,
+    },
+  };
+
   return (
     <div className="w-full flex flex-col items-center p-2">
       <div className="flex flex-col gap-2 w-full">
-        {options.map((option) => (
-          <button
-            //variant={"outline"}
-            key={option.text}
-            onClick={() => handleClick(option.rsvpResponse)}
-            className={cn(
-              "w-full p-2 rounded-md border border-customRed transition-colors sm:hover:bg-red-300 sm:hover:text-white",
-              selectedOption === option.rsvpResponse
-                ? "bg-customRed text-white"
-                : ""
-            )}
-          >
-            {option.text}
-          </button>
-        ))}
+        <div className="flex flex-row w-full gap-2">
+          <RsvpResponseButton
+            option={rsvpResponseOptions.yes}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            className="w-1/2"
+          />
+          <RsvpResponseButton
+            option={rsvpResponseOptions.no}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            className="w-1/4"
+          />
+          <RsvpResponseButton
+            option={rsvpResponseOptions.maybe}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            className="w-1/4"
+          />
+          
+        </div>
+        <RsvpResponseButton
+            option={rsvpResponseOptions.representedBy}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            className="w-full"
+          />
+
+        
       </div>
     </div>
   );
