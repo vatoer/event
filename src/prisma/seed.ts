@@ -16,8 +16,9 @@ async function main() {
 
     const event = await prisma.event.create({
         data: {
-        title: "Event Title",
-        description: "Event Description",
+        id: "resdip79",
+        title: "Resepsi Diplomatik",
+        description: "Resepsi Diplomatik",
         date: new Date(),
         userId: user.id,
         },

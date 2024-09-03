@@ -7,7 +7,7 @@ const rsvpPage = async ({ params }: { params: { slug: string } }) => {
     // check data from database
 
     // if data exists, return the data
-    const eventId = "cm05mzt860001vupmoswizhl3";
+    const eventId = "resdip79";
     const rsvpId = params.slug;
     const rsvp = await getRsvp(eventId, rsvpId);
     console.log(rsvp);
