@@ -1,7 +1,7 @@
 "use client";
 import { RsvpResponse } from "@prisma/client";
 import RsvpResponseButtons from "./rsvp-response-buttons";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import responseRsvp from "@/actions/rsvp";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,8 @@ const RsvpResponseWrapper = ({
   id,
   rsvpResponse,
 }: RsvpResponseWrapperProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(
     rsvpResponse || RsvpResponse.YES
   );
@@ -43,7 +45,7 @@ const RsvpResponseWrapper = ({
       setIsEditing(false);
       const rsvp = await responseRsvp(id, option as RsvpResponse, "");
       console.log("[rsvp]", rsvp);
-    }
+    } 
   };
 
   const [representedBy, setRepresentedBy] = useState<string | null>(null);
@@ -88,6 +90,19 @@ const RsvpResponseWrapper = ({
       break;
   }
 
+  useEffect(() => {
+    if (selectedOption === 'REPRESENTEDBY' && scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+
+      // Focus on the input element after scrolling
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 500); // Adjust the timeout duration as needed
+    }
+  }, [selectedOption]);
+  
   return (
     <div className="flex flex-col w-full mt-2">
       {rsvpResponse && (
@@ -96,8 +111,10 @@ const RsvpResponseWrapper = ({
           <h1 className="font-bold text-customRed underline">{responseText}</h1>
           {!isEditing && (
             <div className="flex flex-wrap justify-center w-full p-2">
-            <p className="w-full sm:w-2/3 break-words overflow-hidden">{ackText}</p>
-          </div>
+              <p className="w-full sm:w-2/3 break-words overflow-hidden">
+                {ackText}
+              </p>
+            </div>
           )}
         </div>
       )}
@@ -105,8 +122,11 @@ const RsvpResponseWrapper = ({
       <div className="flex flex-col p-2">
         {!isEditing && (
           <Button
-            className={cn("w-full",
-              selectedOption === RsvpResponse.NO ? "bg-blue-500 text-white" : "text-gray-400 text-xs"
+            className={cn(
+              "w-full",
+              selectedOption === RsvpResponse.NO
+                ? "bg-blue-500 text-white"
+                : "text-gray-400 text-xs"
             )}
             variant={"outline"}
             onClick={() => setIsEditing(!isEditing)}
@@ -126,8 +146,12 @@ const RsvpResponseWrapper = ({
 
             {selectedOption === RsvpResponse.REPRESENTEDBY && (
               <>
-                <div className="w-full flex flex-col items-center p-2">
+                <div
+                  ref={scrollRef}
+                  className="w-full flex flex-col items-center p-2"
+                >
                   <input
+                    ref={inputRef}
                     maxLength={50}
                     type="text"
                     placeholder="Represented by"
