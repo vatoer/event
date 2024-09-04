@@ -90,12 +90,12 @@ const RsvpResponseWrapper = ({
                     placeholder="Represented by"
                     value={representedBy ?? ""}
                     onChange={(e) => setRepresentedBy(e.target.value)}
-                    className="w-full p-2 border border-customRed rounded-md"
+                    className="w-full p-2 border border-blue-400 rounded-md"
                   />
                 </div>
                 <div className="w-full flex flex-col items-center p-2">
                   <Button
-                    className="w-full"
+                    className="w-full bg-blue-700"
                     onClick={handleOnRepresentedBy}
                   >
                     Submit
