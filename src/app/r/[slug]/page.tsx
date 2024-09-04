@@ -28,7 +28,7 @@ const rsvpPage = async ({ params }: { params: { slug: string } }) => {
         <div className="flex flex-col w-full">
 
             <EventWrapper event={event} />
-            <GuestWrapper guest={guest} blur={true} rsvp={rsvp} />
+            <GuestWrapper guest={guest} blur={false} rsvp={rsvp} />
             <RsvpResponseWrapper id={rsvp.id} rsvpResponse={rsvp.rsvpResponse} />
             
         </div>

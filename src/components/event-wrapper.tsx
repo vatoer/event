@@ -10,14 +10,20 @@ const EventWrapper = ({ event }: EventWrapperProps) => {
 
   return (
     <>
-      <div className="w-full items-center text-sm justify-center flex-col leading-4 sm:leading-6 text-gray-900 sm:truncate sm:tracking-tight text text-center">
+      <div className="w-full items-center justify-center flex-col leading-5 sm:leading-6 text-gray-900 sm:truncate sm:tracking-tight text text-center">
         <h1 className="m-1">RSVP FORM</h1>
-        <h1 className="">DIPLOMATIC RECEPTION</h1>
-        <h1>COMMEMORATING</h1>
-        <h1>
-          THE 79<sup>TH</sup> INDEPENDENCE DAY OF
+        <h1 className="">Diplomatic Reception Commemorating 
         </h1>
-        <h1>THE REPUBLIC OF INDONESIA</h1>
+        <h1></h1>
+        <h1>
+        the 79<sup>th</sup>Anniversary of the Independence Day
+        </h1>
+        <h1>of the Republic of Indonesia</h1>
+        <h1>and</h1>
+        <h1>
+        the 79<sup>th</sup> Anniversary  of the Armed Forces 
+        </h1>
+        <h1>of the Republic of Indonesia</h1>
       </div>
 
       <div className="w-full items-center justify-center flex flex-col px-2 my-4 text-xs">

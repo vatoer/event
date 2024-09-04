@@ -168,7 +168,7 @@ pm2 start pnpm --name "event-app" -- start --port 3000
 pm2 start pnpm --name "event-app" -- start --port 3001
 ```
 
-### summary 
+### summary
 
 ```sh
 git pull
@@ -176,4 +176,26 @@ pnpm install
 pnpm build
 pnpm prisma db push --schema=./src/prisma/db-event/schema.prisma
 pm2 restart event-app
+```
+
+
+## allow remote connect database
+
+`pg_hba.conf:`
+
+### Allow connections from specific IP address
+
+```conf
+host    all             all             192.168.44.10/32          scram-sha-256
+```
+
+`postgresql.conf:`
+# Listen on all network interfaces
+
+```conf
+listen_addresses = '*'
+```
+
+```sh
+sudo systemctl restart postgresql
 ```

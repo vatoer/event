@@ -25,13 +25,12 @@ const RsvpResponseButton = ({
 
   return (
     <button
-      //variant={"outline"}
       key={option.text}
       onClick={() => handleClick(option.rsvpResponse)}
       className={cn(
         "px-1 py-2  rounded-md border border-customRed transition-colors sm:hover:bg-red-300 sm:hover:text-white text-sm",
         className,
-        selectedOption === option.rsvpResponse ? "bg-customRed text-white" : ""
+        selectedOption === option.rsvpResponse ? "bg-customRed text-white" : "",
       )}
     >
       {option.text}

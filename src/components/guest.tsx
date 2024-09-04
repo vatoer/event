@@ -18,13 +18,10 @@ const blurGuest = (guest: Guest) => {
 };
 
 const GuestWrapper = ({ guest, blur, rsvp }: GuestWrapperProps) => {
-  if (blur) {
-    guest = blurGuest(guest);
-  }
+  const guestFullname = `${guest.prefix ?? ""} ${guest.firstName ?? ""} ${guest.lastName??""} `
   return (
-    <div className="w-full items-center justify-center flex flex-col mt-2 border-customRed border-x-0 border-2">
-      <div>{guest.name}</div>
-      <div>{guest.email}</div>
+    <div className="w-full items-center justify-center flex flex-col mt-2 p-2 border-customRed border-x-0 border-2 ">
+      <div>{guestFullname}</div>      
       {rsvp.rsvpResponse === "REPRESENTEDBY" && (
         <div>Represented By: {rsvp.representedBy}</div>
       )}

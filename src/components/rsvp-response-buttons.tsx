@@ -11,6 +11,7 @@ interface RsvpResponseButtonsProps {
     rsvpResponse: RsvpResponse;
   }[];
   selectedOption: string | null;
+  temporarilySelectedOption: string | null;
   setSelectedOption: (option: string) => void;
 }
 
@@ -24,11 +25,11 @@ const RsvpResponseButtons = ({
   };
 
   const rsvpResponseOptions = {
-    yes: { text: "Yes, I will attend", rsvpResponse: RsvpResponse.YES },
-    no: { text: "No", rsvpResponse: RsvpResponse.NO },
+    yes: { text: "Yes, I graciously accept", rsvpResponse: RsvpResponse.YES },
+    no: { text: "No, I regretly decline", rsvpResponse: RsvpResponse.NO },
     maybe: { text: "Maybe", rsvpResponse: RsvpResponse.MAYBE },
     representedBy: {
-      text: "Yes, Represented by",
+      text: "Yes, I am represented by",
       rsvpResponse: RsvpResponse.REPRESENTEDBY,
     },
   };
@@ -40,28 +41,24 @@ const RsvpResponseButtons = ({
           option={rsvpResponseOptions.yes}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
-          className="w-full p-4 my-2"
+          className="w-full p-4 my-1"
         />
-        <div className="flex flex-row w-full gap-2">
-          <RsvpResponseButton
-            option={rsvpResponseOptions.representedBy}
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-            className="w-1/2"
-          />
-          <RsvpResponseButton
-            option={rsvpResponseOptions.no}
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-            className="w-1/4"
-          />
-          <RsvpResponseButton
-            option={rsvpResponseOptions.maybe}
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-            className="w-1/4"
-          />
-        </div>
+
+        <RsvpResponseButton
+          option={rsvpResponseOptions.no}
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+          className="w-full p-4 my-1"
+        />
+
+        <RsvpResponseButton
+          option={rsvpResponseOptions.representedBy}
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+          className="w-full p-4 my-1"
+        />
+
+        <div className="flex flex-row w-full gap-2"></div>
       </div>
     </div>
   );

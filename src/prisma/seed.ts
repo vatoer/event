@@ -83,7 +83,7 @@ async function main() {
       title: "Resepsi Diplomatik",
       description: "Resepsi Diplomatik",
       location: "InterContinental Paris Le Grand Hotel",
-      date: new Date(),
+      date: new Date('2024-10-03T19:00:00.000Z'),
       userId: user.id,
     },
   });
