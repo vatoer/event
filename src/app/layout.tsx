@@ -7,6 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Event",
   description: "Ambassade de Indonesie",
+  icons: ["favicon.ico"],
 };
 
 export default function RootLayout({
