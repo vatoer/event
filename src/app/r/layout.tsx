@@ -11,6 +11,8 @@ const RsvpLayout = ({ children }: { children: React.ReactNode }) => {
               alt="Ambassade de Indonesie"
               width={52}
               height={52}
+              className="w-auto h-16" // Tailwind classes for width and height
+
             />
           </div>
           <div className="w-1/3 flex justify-center items-center">
@@ -19,6 +21,7 @@ const RsvpLayout = ({ children }: { children: React.ReactNode }) => {
               alt="Ambassade de Indonesie"
               width={52}
               height={52}
+              className="w-auto h-16" // Tailwind classes for width and height
             />
           </div>
         </div>
