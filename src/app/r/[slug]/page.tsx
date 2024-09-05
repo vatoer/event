@@ -29,7 +29,7 @@ const rsvpPage = async ({ params }: { params: { slug: string } }) => {
 
             <EventWrapper event={event} />
             <GuestWrapper guest={guest} blur={false} rsvp={rsvp} />
-            <RsvpResponseWrapper id={rsvp.id} rsvpResponse={rsvp.rsvpResponse} />
+            <RsvpResponseWrapper rsvp={rsvp} />
             
         </div>
      );

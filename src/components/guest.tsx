@@ -23,7 +23,7 @@ const GuestWrapper = ({ guest, blur, rsvp }: GuestWrapperProps) => {
     <div className="w-full items-center justify-center flex flex-col mt-2 p-2 border-customRed border-x-0 border-2 ">
       <div>{guestFullname}</div>      
       {rsvp.rsvpResponse === "REPRESENTEDBY" && (
-        <div>Represented By: {rsvp.representedBy}</div>
+        <div>Represented by: {rsvp.representedBy}</div>
       )}
     </div>
   );

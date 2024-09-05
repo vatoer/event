@@ -11,7 +11,6 @@ interface RsvpResponseButtonsProps {
     rsvpResponse: RsvpResponse;
   }[];
   selectedOption: string | null;
-  temporarilySelectedOption: string | null;
   setSelectedOption: (option: string) => void;
 }
 
