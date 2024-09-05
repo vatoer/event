@@ -117,7 +117,7 @@ const RsvpResponseWrapper = ({ rsvp }: RsvpResponseWrapperProps) => {
       )}
 
       <div className="flex justify-center w-full px-4 py-0">
-      {!rsvp.rsvpResponse && (
+      {!rsvp.rsvpResponse && selectedOption !==RsvpResponse.REPRESENTEDBY && (
         <span className="">Please select your response below</span>
       )}
       {rsvp.rsvpResponse && isEditing && selectedOption!==RsvpResponse.REPRESENTEDBY &&  (
