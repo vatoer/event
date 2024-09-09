@@ -20,46 +20,47 @@ const seedGuests = async (): Promise<void> => {
   const [headers, ...rows] = data;
   // Extract column names from the first row
 
-    try {
-      // Iterate over each row in the Excel file
-      for (const row of rows) {
-        const rowData = headers.reduce((acc, header, index) => {
-          acc[header] = row[index];
-          return acc;
-        }, {} as Record<string, any>);
+  const date = new Date();
 
-        const guestId = `${rowData.fungsi}_${rowData.id}`;
-        const guest = await prisma.guest.create({
-          data: {
-            id: guestId,
-            prefix: rowData.prefix,
-            firstName: rowData.firstname,
-            lastName: rowData.lastname,
-            profession: rowData.jabatan,
-            institution: rowData.instansi,
-            email: rowData.email,
-          },
-        });
+  try {
+    // Iterate over each row in the Excel file
+    for (const row of rows) {
+      const rowData = headers.reduce((acc, header, index) => {
+        acc[header] = row[index];
+        return acc;
+      }, {} as Record<string, any>);
 
-        console.log(guest);
+      const guestId = `${rowData.fungsi}_${rowData.id}`;
+      const guest = await prisma.guest.create({
+        data: {
+          id: guestId,
+          prefix: rowData.prefix,
+          firstName: rowData.firstname,
+          lastName: rowData.lastname,
+          profession: rowData.jabatan,
+          institution: rowData.instansi,
+          email: rowData.email,
+          createdAt: date,
+        },
+      });
 
-        const rsvp = await prisma.rsvp.create({
-          data: {
-            id: rowData.id,
-            eventId: "resdip79",
-            guestId: guest.id,
-          },
-        });
+      console.log(guest);
 
-        console.log(rsvp);
+      const rsvp = await prisma.rsvp.create({
+        data: {
+          id: rowData.id,
+          eventId: "resdip79",
+          guestId: guest.id,
+          createdAt: date,
+        },
+      });
 
-      }
-     
-    } catch (error) {
-      throw new Error(`Error seeding guests: ${error}`);
+      console.log(rsvp);
     }
-}
-
+  } catch (error) {
+    throw new Error(`Error seeding guests: ${error}`);
+  }
+};
 
 async function main() {
   //await prisma.rsvp.deleteMany();
@@ -67,29 +68,39 @@ async function main() {
   //await prisma.event.deleteMany();
   //await prisma.user.deleteMany();
 
+  const date = new Date();
+
   const password = await hash("password", 10);
-  const user: User = await prisma.user.create({
-    data: {
+  const user: User = await prisma.user.upsert({
+    where: { email: "paris.kbri@kemlu.go.id" },
+    create: {
       email: "paris.kbri@kemlu.go.id",
       name: "Paris KBRI",
       password: password,
     },
+    update: {
+      updatedAt: date,
+    },
   });
   console.log(user);
 
-  const event = await prisma.event.create({
-    data: {
+  const event = await prisma.event.upsert({
+    where: { id: "resdip79" },
+    update: {
+      updatedAt: date,
+    },
+    create: {
       id: "resdip79",
       title: "Resepsi Diplomatik",
       description: "Resepsi Diplomatik",
       location: "InterContinental Paris Le Grand Hotel",
-      date: new Date('2024-10-03T19:00:00.000Z'),
-      toDate: new Date('2024-10-03T21:00:00.000Z'),
+      date: new Date("2024-10-03T19:00:00.000Z"),
+      todate: new Date("2024-10-03T21:00:00.000Z"),
       userId: user.id,
     },
   });
 
-    await seedGuests();
+  await seedGuests();
 }
 
 main();
