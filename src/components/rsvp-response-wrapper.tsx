@@ -23,7 +23,6 @@ const RsvpResponseWrapper = ({ rsvp }: RsvpResponseWrapperProps) => {
 
   const options = [
     { text: "Yes, I will attend", rsvpResponse: RsvpResponse.YES },
-    { text: "Maybe", rsvpResponse: RsvpResponse.MAYBE },
     { text: "No", rsvpResponse: RsvpResponse.NO },
     { text: "Yes, Represented by", rsvpResponse: RsvpResponse.REPRESENTEDBY },
   ];

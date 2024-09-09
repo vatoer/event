@@ -26,7 +26,6 @@ const RsvpResponseButtons = ({
   const rsvpResponseOptions = {
     yes: { text: "Yes, I graciously accept", rsvpResponse: RsvpResponse.YES },
     no: { text: "No, I regretly decline", rsvpResponse: RsvpResponse.NO },
-    maybe: { text: "Maybe", rsvpResponse: RsvpResponse.MAYBE },
     representedBy: {
       text: "Yes, I am represented by",
       rsvpResponse: RsvpResponse.REPRESENTEDBY,
