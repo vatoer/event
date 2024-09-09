@@ -27,3 +27,31 @@ export async function updateRsvp( id: string, rsvpResponse: RsvpResponse, respre
   });
   return rsvp;
 }
+
+const eventId = 'your-event-id'; // Replace with the actual event ID
+
+export interface RsvpSummary {
+  rsvp_response: RsvpResponse | "NOTRESPONDING";
+  count: number;
+}
+export const getRsvpSummaryByResponse = async (eventId: string):Promise<RsvpSummary[]> => {
+
+    const result = await dbEvent.$queryRaw<RsvpSummary[]>`
+    SELECT 
+      CASE 
+        WHEN rsvp_response IS NULL THEN 'NOTRESPONDING' 
+        ELSE rsvp_response::text 
+      END AS rsvp_response, 
+      COUNT(*) AS count 
+    FROM 
+      public.rsvps 
+    WHERE 
+      event_id = 'resdip79' -- Replace with the actual event ID
+    GROUP BY 
+      CASE 
+        WHEN rsvp_response IS NULL THEN 'NOTRESPONDING' 
+        ELSE rsvp_response::text 
+      END;
+    `
+    return result;
+}

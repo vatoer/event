@@ -34,7 +34,8 @@ model Guest {
   lastName    String?  @map("last_name")
   profession  String?
   institution String?
-  email       String   
+  email       String
+  inviter     String?
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
   Rsvp        Rsvp[]
@@ -46,7 +47,6 @@ enum RsvpResponse {
   YES
   REPRESENTEDBY
   NO
-  MAYBE
 }
 
 model Event {
@@ -66,19 +66,23 @@ model Event {
 }
 
 model Rsvp {
-  id           String        @id
-  user         User?         @relation(fields: [userId], references: [id])
-  userId       String?       @map("user_id")
-  guest        Guest         @relation(fields: [guestId], references: [id])
-  guestId      String        @map("guest_id")
-  representedBy String?       @map("represented_by")
-  event        Event         @relation(fields: [eventId], references: [id])
-  eventId      String
-  attending    Boolean?
-  attendingAt  DateTime?     @map("attending_at")
-  rsvpResponse RsvpResponse? @map("rsvp_response")
-  createdAt    DateTime      @default(now()) @map("created_at")
-  updatedAt    DateTime      @updatedAt @map("updated_at")
+  id                String        @id
+  user              User?         @relation(fields: [userId], references: [id])
+  userId            String?       @map("user_id")
+  guest             Guest         @relation(fields: [guestId], references: [id])
+  guestId           String        @map("guest_id")
+  representedBy     String?       @map("represented_by")
+  event             Event         @relation(fields: [eventId], references: [id])
+  eventId           String        @map("event_id")
+  attending         Boolean?
+  attendingAt       DateTime?     @map("attending_at")
+  rsvpResponse      RsvpResponse? @map("rsvp_response")
+  responseUpdatedBy String?       @map("response_updated_by") // jika diisi, maka dianggap diupdate oleh user backend
+  responseUpdatedAt DateTime?     @map("response_updated_at") // jika diisi, maka dianggap diupdate oleh user backend
+  responseNote      String?       @map("response_note") // email, phone, etc
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("rsvps")
 }

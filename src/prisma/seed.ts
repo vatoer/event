@@ -62,10 +62,10 @@ const seedGuests = async (): Promise<void> => {
 
 
 async function main() {
-  await prisma.rsvp.deleteMany();
-  await prisma.guest.deleteMany();
-  await prisma.event.deleteMany();
-  await prisma.user.deleteMany();
+  //await prisma.rsvp.deleteMany();
+  //await prisma.guest.deleteMany();
+  //await prisma.event.deleteMany();
+  //await prisma.user.deleteMany();
 
   const password = await hash("password", 10);
   const user: User = await prisma.user.create({
