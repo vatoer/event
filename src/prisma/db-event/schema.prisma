@@ -54,6 +54,7 @@ model Event {
   title       String
   description String?
   date        DateTime
+  todate      DateTime
   location    String?
   latitute    Float?
   longitude   Float?
