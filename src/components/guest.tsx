@@ -13,7 +13,7 @@ const blurGuest = (guest: Guest) => {
     name: `${guest.prefix ?? ""} ${blurName(guest.firstName ?? "")} ${blurName(
       guest.lastName ?? ""
     )}`,
-    email: blurEmail(guest.email),
+    // email: blurEmail(guest.email),
   };
 };
 
