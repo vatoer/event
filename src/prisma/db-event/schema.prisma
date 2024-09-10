@@ -34,7 +34,7 @@ model Guest {
   lastName    String?  @map("last_name")
   profession  String?
   institution String?
-  email       String
+  email       String?
   inviter     String?
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
