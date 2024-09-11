@@ -1,12 +1,14 @@
 "use server";
-import { updateRsvp } from "@/data/rsvp";
+import { updateRsvp, updateRsvpBackend } from "@/data/rsvp";
 import { ActionResponse } from "./response";
 import { RsvpResponse } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 interface ResponseRsvpResult {
   value: RsvpResponse;
+  note?: string;
 }
+
 const responseRsvp = async (
   id: string,
   rsvpResponse: RsvpResponse,
@@ -28,6 +30,33 @@ const responseRsvp = async (
     success: true,
     data: {
       value: rsvpResponse,
+    },
+  };
+};
+
+
+export const responseRsvpBackend = async (
+  id: string,
+  rsvpResponse: RsvpResponse,
+  note?: string| null
+): Promise<ActionResponse<ResponseRsvpResult>> => {
+  console.log("[rsvpResponse]", rsvpResponse);
+
+  if (rsvpResponse === RsvpResponse.REPRESENTEDBY && !note) {
+    return {
+      success: false,
+      error: "Please provide a name",
+    };
+  }
+
+  const rsvp = await updateRsvpBackend(id, rsvpResponse,note);
+  console.log("[rsvp]", rsvp);
+
+  return {
+    success: true,
+    data: {
+      value: rsvp.rsvpResponseUpdated!,
+      note: rsvp.note ?? "",
     },
   };
 };
