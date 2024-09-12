@@ -1,0 +1,23 @@
+<svg viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .small {
+      font: italic 18px sans-serif;
+      fill: gray;
+    }
+    .heavy {
+      font: bold 48px sans-serif;
+      fill: #374151;
+    }
+    /* Note that the color of the text is set with the    *
+     * fill property, the color property is for HTML only */
+    .Rrrrr {
+      font: bold italic 72px serif;
+      fill: red;
+    }
+  </style>
+
+  <text x="50" y="45" class="heavy">Acara</text>
+  <text x="120" y="75" class="small">te</text>
+  <text x="130" y="110" class="Rrrrr">Mu</text>
+  
+</svg>
