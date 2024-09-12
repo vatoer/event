@@ -28,7 +28,7 @@ export async function updateRsvp( id: string, rsvpResponse: RsvpResponse, respre
   return rsvp;
 }
 
-export async function updateRsvpBackend( id: string, rsvpResponse: RsvpResponse, note?: string|null) {
+export async function updateRsvpBackend( id: string, rsvpResponse: RsvpResponse, user:string, note?: string|null) {
   const rsvp = await dbEvent.rsvp.update({
     where: {
       id,
@@ -36,6 +36,8 @@ export async function updateRsvpBackend( id: string, rsvpResponse: RsvpResponse,
     data: {
       rsvpResponseUpdated: rsvpResponse,
       note: note, // repsentedBy + note
+      responseUpdatedBy: user,
+      responseUpdatedAt: new Date(),
     },
   });
   return rsvp;

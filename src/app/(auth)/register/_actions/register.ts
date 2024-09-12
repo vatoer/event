@@ -9,42 +9,44 @@ import { RegisterSchema } from "../_schema/register";
 type TRegister = z.infer<typeof RegisterSchema>;
 
 export const register = async (data: TRegister) => {
-  console.log(data);
-  const validateFields = RegisterSchema.safeParse(data);
+  throw new Error("Not implemented");
 
-  if (!validateFields.success) {
-    return { error: "Invalid data", data: validateFields.error };
-  }
+  // console.log(data);
+  // const validateFields = RegisterSchema.safeParse(data);
 
-  const { email, password } = validateFields.data;
+  // if (!validateFields.success) {
+  //   return { error: "Invalid data", data: validateFields.error };
+  // }
 
-  const newUser = await userCreate(data);
-  if ("error" in newUser) {
-    return { error: newUser.error };
-  }
+  // const { email, password } = validateFields.data;
 
-  // if user is created, sign in
+  // const newUser = await userCreate(data);
+  // if ("error" in newUser) {
+  //   return { error: newUser.error };
+  // }
 
-  try {
-    await signIn("credentials", {
-      email,
-      password,
-      redirectTo: DEFAULT_ROUTE_AFTER_LOGIN,
-    });
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case "CredentialsSignin": {
-          console.log(error);
-          return { error: "Invalid credentials" };
-        }
-        default:
-          return { error: "Something went wrong" };
-      }
-    }
-    throw error;
-  }
+  // // if user is created, sign in
 
-  delete (newUser as any).password;
-  return { user: newUser };
+  // try {
+  //   await signIn("credentials", {
+  //     email,
+  //     password,
+  //     redirectTo: DEFAULT_ROUTE_AFTER_LOGIN,
+  //   });
+  // } catch (error) {
+  //   if (error instanceof AuthError) {
+  //     switch (error.type) {
+  //       case "CredentialsSignin": {
+  //         console.log(error);
+  //         return { error: "Invalid credentials" };
+  //       }
+  //       default:
+  //         return { error: "Something went wrong" };
+  //     }
+  //   }
+  //   throw error;
+  // }
+
+  // delete (newUser as any).password;
+  // return { user: newUser };
 };

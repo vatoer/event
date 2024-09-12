@@ -81,6 +81,8 @@ const LoginForm = () => {
           callbackUrl={callbackUrl}
           text="Login with Google"
         />
+        {/* 
+        not implemented yet
         <Link
           href="/register"
           className={buttonVariants({
@@ -90,7 +92,7 @@ const LoginForm = () => {
         >
           <span>Dont have an account? Register here</span>
           <ArrowRight className="h-4 w-4 ml-1" />
-        </Link>
+        </Link> */}
       </form>
     </div>
   );

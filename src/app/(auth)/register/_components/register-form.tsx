@@ -3,7 +3,6 @@ import LogoMix from "@/components/logo-mix";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Loader } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -35,13 +34,15 @@ const RegisterForm = () => {
 
   const onSubmit = (data: TRegister) => {
     startTransition(async () => {
-      const response = await registerUser(data);
-      if (response?.error) {
-        setError(response.error);
-      }
+      // not implemented yet
+      alert("Not implemented yet");
+      return;
+      // const response = await registerUser(data);
+      // if (response?.error) {
+      //   setError(response.error);
+      // }
     });
   };
-  const t = useTranslations("Login");
 
   return (
     <div className="flex flex-col gap-2 mb-4">
@@ -53,14 +54,14 @@ const RegisterForm = () => {
       >
         <InputForm
           id="name"
-          label={t("name")}
+          label="Name"
           type="text"
           register={register}
           error={errors.name}
         />
         <InputForm
           id="email"
-          label={t("email")}
+          label="Email"
           type="text"
           register={register}
           error={errors.email}
@@ -68,7 +69,7 @@ const RegisterForm = () => {
         />
         <InputForm
           id="password"
-          label={t("password")}
+          label="Password"
           type="password"
           register={register}
           error={errors.password}
@@ -77,7 +78,7 @@ const RegisterForm = () => {
         <FormError message={error} />
 
         <Button className=" w-full py-6" disabled={isPending} type="submit">
-          {t("register")}
+          <span>Register</span>
           {isPending && (
             <Loader className="ml-2 spin-in" size={24} color="white" />
           )}
@@ -85,7 +86,7 @@ const RegisterForm = () => {
         <div className="flex items-center before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
           <p className="text-center font-semibold mx-4 mb-0">OR</p>
         </div>
-        <ButtonWithGoogle callbackUrl={callbackUrl} text={t("withGoogle")} />
+        <ButtonWithGoogle callbackUrl={callbackUrl} text="Login with Google" />
         <Link
           href="/login"
           className={buttonVariants({
@@ -93,7 +94,7 @@ const RegisterForm = () => {
             className: "gap-1.5 w-full text-blue-500",
           })}
         >
-          {t("haveAccount")} {t("login")}
+          <span>Already have account? login</span>
           <ArrowRight className="h-4 w-4 ml-1" />
         </Link>
       </form>

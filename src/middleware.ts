@@ -28,7 +28,7 @@ function getCookieValue(
 
 export default auth((req) => {
   const { nextUrl } = req;
-  const isLoggenIn = !!req.auth;
+  const isLoggedIn = !!req.auth;
   const isApiAuthRoute = nextUrl.pathname.startsWith(API_AUTH_PREFIX);
   const isAuthRoute = AUTH_ROUTES.includes(nextUrl.pathname);
 
@@ -54,7 +54,7 @@ export default auth((req) => {
 
   // if the route is an Auth route and is log in, redirect to the default route
   if (isAuthRoute) {
-    if (isLoggenIn) {
+    if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_ROUTE_AFTER_LOGIN, nextUrl));
     }
     return;
@@ -65,8 +65,9 @@ export default auth((req) => {
   console.log("[MIDDLEWARE PATHNAME]", nextUrl.pathname.split("/"));
 
   // if the route is not an Auth route and is not log in, redirect to the login page
-  if (!isLoggenIn && !isPublicRoute) {
-    return Response.redirect(new URL("/login?callbackUrl="+nextUrl.pathname, nextUrl));
+  if (!isLoggedIn && !isPublicRoute) {
+    console.log("[MIDDLEWARE] Redirect to login");
+    return NextResponse.redirect(new URL("/login?callbackUrl="+nextUrl.pathname, nextUrl));
   }
   return;
 });

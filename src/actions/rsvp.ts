@@ -3,6 +3,7 @@ import { updateRsvp, updateRsvpBackend } from "@/data/rsvp";
 import { ActionResponse } from "./response";
 import { RsvpResponse } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { auth } from "@auth/auth";
 
 interface ResponseRsvpResult {
   value: RsvpResponse;
@@ -42,6 +43,16 @@ export const responseRsvpBackend = async (
 ): Promise<ActionResponse<ResponseRsvpResult>> => {
   console.log("[rsvpResponse]", rsvpResponse);
 
+  const session = await auth();
+  const user = session?.user;
+
+  if (!user) {
+    return {
+      success: false,
+      error: "Please login",
+    };
+  }
+
   if (rsvpResponse === RsvpResponse.REPRESENTEDBY && !note) {
     return {
       success: false,
@@ -49,7 +60,8 @@ export const responseRsvpBackend = async (
     };
   }
 
-  const rsvp = await updateRsvpBackend(id, rsvpResponse,note);
+  
+  const rsvp = await updateRsvpBackend(id, rsvpResponse, user.email!,  note);
   console.log("[rsvp]", rsvp);
 
   return {

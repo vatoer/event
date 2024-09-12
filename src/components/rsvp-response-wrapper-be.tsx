@@ -8,13 +8,12 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import RsvpResponseButtonsBackEnd from "./rsvp-response-buttons-be";
 
-
 interface RsvpResponseWrapperBackEndProps {
   rsvp: Rsvp;
 }
 
 const RsvpResponseWrapperBackEnd = ({
-  rsvp:initialRsvp,
+  rsvp: initialRsvp,
 }: RsvpResponseWrapperBackEndProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -50,14 +49,13 @@ const RsvpResponseWrapperBackEnd = ({
       setNote("");
       setRepresentedBy("");
 
-      if(updatersvp.success){
+      if (updatersvp.success) {
         setRsvp({
           ...rsvp,
-          note: updatersvp.data.note?? "",
+          note: updatersvp.data.note ?? "",
           rsvpResponseUpdated: updatersvp.data.value as RsvpResponse,
         });
       }
-
     }
   };
 
@@ -78,7 +76,7 @@ const RsvpResponseWrapperBackEnd = ({
         RsvpResponse.REPRESENTEDBY,
         representedBy?.trim() + "; note: " + note
       );
-      if(updatersvp.success){
+      if (updatersvp.success) {
         setRsvp({
           ...rsvp,
           note: updatersvp.data.note!,
@@ -91,8 +89,7 @@ const RsvpResponseWrapperBackEnd = ({
     }
   };
 
-  let ackText =
-    "Thank you for your response.";
+  let ackText = "Thank you for your response.";
 
   const representative =
     representedBy && representedBy.trim() !== "" ? representedBy : "[Name]";
@@ -105,8 +102,7 @@ const RsvpResponseWrapperBackEnd = ({
       break;
     case RsvpResponse.NO:
       responseText = "No";
-      ackText =
-        "Thank you";
+      ackText = "Thank you";
       break;
     default:
       break;
@@ -128,31 +124,35 @@ const RsvpResponseWrapperBackEnd = ({
   useEffect(() => {
     setNote("");
     setRepresentedBy("");
-    setSelectedOption(rsvp.rsvpResponse || RsvpResponse.YES);    
+    setSelectedOption(rsvp.rsvpResponse || RsvpResponse.YES);
 
     if (rsvp.rsvpResponseUpdated) {
       setSelectedOption(rsvp.rsvpResponseUpdated);
-      if(rsvp.note){
+      if (rsvp.note) {
         setNote(rsvp.note);
       }
-    }    
+    }
   }, [rsvp]);
 
   useEffect(() => {
     setRsvp(initialRsvp);
   }, [initialRsvp]);
-  
+
   return (
     <div className="flex flex-col w-full mt-2 py-20">
       {!rsvp.rsvpResponse && !rsvp.rsvpResponseUpdated && (
         <div>
-          <h1 className="text-white bg-gray-500 font-semibold text-2xl p-2 text-center my-2">BELUM ADA RESPONSE - {rsvp.id}</h1>
+          <h1 className="text-white bg-gray-500 font-semibold text-2xl p-2 text-center my-2">
+            BELUM ADA RESPONSE - {rsvp.id}
+          </h1>
         </div>
       )}
       {rsvp.rsvpResponse && (
         <div className="border-blue-500 border w-full items-center text-sm justify-center flex-col leading-7 text-gray-900 sm:tracking-tight text text-center">
           <h1 className="font-semibold text-lg my-2">Response by Invitee</h1>
-          <h1 className="font-bold text-customRed underline text-2xl">{rsvp.rsvpResponse}</h1>
+          <h1 className="font-bold text-customRed underline text-2xl">
+            {rsvp.rsvpResponse}
+          </h1>
           {!isEditing && (
             <div className="flex flex-wrap justify-center w-full p-2">
               <p className="w-full sm:w-2/3 break-words overflow-hidden">
@@ -165,16 +165,20 @@ const RsvpResponseWrapperBackEnd = ({
 
       {rsvp.rsvpResponseUpdated && (
         <div className="border-green-700 mt-10 bg-gray-200 border w-full items-center text-sm justify-center flex-col leading-7 text-gray-900 sm:tracking-tight text text-center">
-          <h1 className="font-semibold text-lg my-2">Updated Response by Admin</h1>
+          <h1 className="font-semibold text-lg my-2">
+            Updated Response by {rsvp.responseUpdatedBy} at{" "}
+            {rsvp.responseUpdatedAt?.toLocaleDateString()} {rsvp.responseUpdatedAt?.toLocaleTimeString()}
+          </h1>
           <h1 className="font-semibold text-lg my-2">{rsvp.id}</h1>
-          <h1 className="font-bold text-customRed underline text-2xl">{rsvp.rsvpResponseUpdated}</h1>
-          
-            <div className="flex flex-wrap justify-center w-full p-2">
-              <p className="w-full sm:w-2/3 break-words overflow-hidden">
-                {rsvp.note}
-              </p>
-            </div>
-          
+          <h1 className="font-bold text-customRed underline text-2xl">
+            {rsvp.rsvpResponseUpdated}
+          </h1>
+
+          <div className="flex flex-wrap justify-center w-full p-2">
+            <p className="w-full sm:w-2/3 break-words overflow-hidden">
+              {rsvp.note}
+            </p>
+          </div>
         </div>
       )}
 
@@ -218,9 +222,11 @@ const RsvpResponseWrapperBackEnd = ({
         {isEditing && (
           <>
             <div className="flex w-full p-2">
-              <textarea placeholder="catatan: email,phone,etc" className="w-full border rounded-md border-blue-500 p-2"
-              onChange={(e) => setNote(e.target.value)} 
-              value={note}
+              <textarea
+                placeholder="catatan: email,phone,etc"
+                className="w-full border rounded-md border-blue-500 p-2"
+                onChange={(e) => setNote(e.target.value)}
+                value={note}
               ></textarea>
             </div>
 
