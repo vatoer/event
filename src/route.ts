@@ -23,7 +23,7 @@ export const AUTH_ROUTES = [
   "/reset-password",
 ];
 
-export const PUBLIC_ROUTES = ["/", "/r","/qr","/privacy","/terms-of-service"];
+export const PUBLIC_ROUTES = ["/", "/e","/r","/qr","/privacy","/terms-of-service"];
 
 export const DEFAULT_ROUTE_AFTER_LOGIN = "/e/resdip79";
 export const DEFAULT_ROUTE_AFTER_LOGOUT = "/";

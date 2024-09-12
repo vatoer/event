@@ -78,6 +78,7 @@ model Rsvp {
   eventId             String        @map("event_id")
   attending           Boolean?
   attendingAt         DateTime?     @map("attending_at")
+  checkinBy           String?       @map("checkin_by")
   rsvpResponse        RsvpResponse? @map("rsvp_response")
   rsvpResponseUpdated RsvpResponse? @map("rsvp_response_updated")
   note                String?       // email, phone, etc

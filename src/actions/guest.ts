@@ -1,13 +1,30 @@
 "use server"
 
-import { getRsvpForEvent } from "@/data/guest"
+import { auth } from "@auth/auth";
+import { checkInGuest, getRsvpAttendanceCheckin, getRsvpForEvent } from "@/data/guest"
 import { Rsvp,Guest } from "@prisma/client"
+import { ActionResponse, ErrorResponse } from "./response";
+
+const getUserEmail = async (): Promise<ActionResponse<string>> => {
+    const session = await auth();
+    if (!session || !session.user) {
+        return { 
+            success: false, 
+            error: "User not authenticated",
+            message: "User not authenticated" };
+    }
+
+    const user = session.user;
+    user.email = user.email ?? "NON EXISTING EMAIL";
+    return { success: true, data: user.email };
+}
 
 export interface OptionRsvp extends Rsvp {
     value: string;
     label: string;
     guest: Guest;
 }
+
 
 export const getRsvpOptions = async () => {
     const rsvp = await getRsvpForEvent("resdip79");
@@ -26,4 +43,35 @@ export const getRsvpOptions = async () => {
 
     return options;
 
+}
+
+export interface GuestAttendance extends Rsvp {
+    guest: Guest;
+}
+
+export const getGuestAttendanceCheckinByMe = async (): Promise<ActionResponse<GuestAttendance[]>> => {
+    const checkUserEmail = await getUserEmail();
+
+    if (!checkUserEmail.success) {
+        return checkUserEmail;
+    }
+
+    const rsvp = await getRsvpAttendanceCheckin("resdip79", checkUserEmail.data);
+    return { success: true, data: rsvp };
+    
+}
+
+
+
+
+export const setCheckIn = async (rsvpId: string, attending: boolean): Promise<ActionResponse<GuestAttendance>> => {
+    const checkUserEmail = await getUserEmail();
+
+    if (!checkUserEmail.success) {
+        return checkUserEmail;
+    }
+    
+    const checkin = await checkInGuest(rsvpId, attending, checkUserEmail.data);
+    console.log(checkin);
+    return { success: true, data: checkin };
 }

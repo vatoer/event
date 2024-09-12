@@ -17,6 +17,36 @@ export const getRsvpForEvent = async (eventId: string, id?: string): Promise<rsv
   return rsvp;
 };
 
+export const getRsvpAttendanceCheckin = async (eventId: string, by?: string): Promise<rsvpGuest[]> => {
+  const rsvp = await dbEvent.rsvp.findMany({
+    where: {
+      eventId,
+      checkinBy: by
+    },
+    include: {
+        guest: true
+    },
+  });
+  return rsvp;
+};
+
+export const checkInGuest = async (rsvpId: string, attending: boolean, checkinBy:string): Promise<rsvpGuest> => {
+  const rsvp = await dbEvent.rsvp.update({
+    where: {
+      id: rsvpId,
+    },
+    data: {
+      attending,
+      attendingAt: new Date(),
+      checkinBy,
+    },
+    include: {
+        guest: true
+    },
+  });
+  return rsvp;
+}
+
 // export interface RsvpSummary {
 //     rsvp_response: RsvpResponse | "NOTRESPONDING";
 //     count: number;
