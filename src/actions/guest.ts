@@ -4,6 +4,10 @@ import { auth } from "@auth/auth";
 import { checkInGuest, getRsvpAttendanceCheckin, getRsvpForEvent } from "@/data/guest"
 import { Rsvp,Guest } from "@prisma/client"
 import { ActionResponse, ErrorResponse } from "./response";
+import { revalidatePath } from "next/cache";
+import { GuestWithRsvp,RsvpGuest } from "@/data/guest";
+export type { GuestWithRsvp,RsvpGuest };
+import { Guest as ZGuest } from "@/zod/schemas/guest";
 
 const getUserEmail = async (): Promise<ActionResponse<string>> => {
     const session = await auth();
@@ -72,6 +76,16 @@ export const setCheckIn = async (rsvpId: string, attending: boolean): Promise<Ac
     }
     
     const checkin = await checkInGuest(rsvpId, attending, checkUserEmail.data);
+    revalidatePath(`/r/${rsvpId}`);
     console.log(checkin);
     return { success: true, data: checkin };
+}
+
+export const simpanDataGuest = async (data: ZGuest): Promise<ActionResponse<Guest>> => {
+    console.log(data);
+    return { success: false, error: "Not implemented yet" };
+}
+
+export const deleteGuest = async (id: string): Promise<ActionResponse<Guest>> => {
+    return { success: false, error: "Not implemented yet" };
 }

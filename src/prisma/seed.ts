@@ -4,12 +4,21 @@ import { User } from "@prisma/client";
 import { hash } from "bcryptjs";
 import path from "path";
 import * as XLSX from "xlsx";
+import fs from "fs";
+import dotenv from 'dotenv';
+
 
 const seedGuests = async (): Promise<void> => {
   console.log("Seeding guests");
 
   const csvPath = "data-seeder/undangan-updated.xlsx";
   const provinsiDataPath = path.resolve(process.cwd(), csvPath);
+
+  // Check if the file exists
+  if (!fs.existsSync(provinsiDataPath)) {
+    console.error(`File not found: ${provinsiDataPath}`);
+    return;
+  }
 
   const workbook = XLSX.readFile(provinsiDataPath);
   const sheetName = workbook.SheetNames[0];
@@ -70,19 +79,40 @@ async function main() {
 
   const date = new Date();
 
-  const password = await hash("password", 10);
+  const password = await hash(process.env.INIT_ADMIN_PASSWORD || "defaultPassword", 10);
   const user: User = await prisma.user.upsert({
     where: { email: "paris.kbri@kemlu.go.id" },
     create: {
       email: "paris.kbri@kemlu.go.id",
       name: "Paris KBRI",
       password: password,
+      roles: ["ADMIN","USER","SCANNER" ],
     },
     update: {
       updatedAt: date,
+      password: password,
+      roles: ["ADMIN","USER","SCANNER" ],
     },
   });
   console.log(user);
+
+  const password2 = await hash(process.env.INIT_SCANNER_PASSWORD || "defaultPassword", 10);
+  const userScanner: User = await prisma.user.upsert({
+    where: { email: "scanner@ambassade-indonesie.fr" },
+    create: {
+      email: "scanner@ambassade-indonesie.fr",
+      name: "Scanner Event",
+      password: password2,
+      roles: ["USER","SCANNER" ],
+    },
+    update: {
+      updatedAt: date,
+      password: password2,
+      roles: ["USER","SCANNER" ],      
+    },
+  });
+  console.log(userScanner);
+
 
   const event = await prisma.event.upsert({
     where: { id: "resdip79" },

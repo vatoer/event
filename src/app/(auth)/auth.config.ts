@@ -77,6 +77,7 @@ export default {
       //console.log("session", session);
       //console.log("token", token);
       session.user.id = token.sub as string;
+      session.user.roles = token.roles as string[];
       return session;
     },
     async jwt({ token, user, account, profile }) {
@@ -84,6 +85,7 @@ export default {
       //console.log("[jwt] account", account);
       if (user) {
         //token.id = user.id;
+        token.roles = user.roles;
       }
       return token;
     },

@@ -1,5 +1,6 @@
 import RSVPChart from "@/components/rsvp-chart";
 import RSVPPieChart, { RSVPData } from "@/components/rsvp-pie-chart";
+import { UserButton } from "@/components/user/user-button";
 import { getRsvpSummaryByResponse,getRsvpSummaryByResponseUpdatedByAdmin } from "@/data/rsvp";
 
 const EvenPage = async () => {
@@ -53,6 +54,9 @@ const EvenPage = async () => {
   console.log(rsvpSummary);
   return (
     <div className="flex flex-col items-center justify-center w-full">
+      <div className="flex flex-row w-full justify-end p-4">
+        <UserButton />
+      </div>
       <h1 className="text-lg font-semibold">Summary RSVP</h1>
 
       <div className="flex flex-col w-2/3 gap-10 items-center justify-center">

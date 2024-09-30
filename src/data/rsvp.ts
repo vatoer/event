@@ -1,5 +1,11 @@
 import { dbEvent } from "@/lib/db-event";
-import {  RsvpResponse } from "@prisma/client";
+import {  Guest, Rsvp, RsvpResponse, Event } from "@prisma/client";
+
+
+export interface rsvpGuest extends Rsvp {
+    guest: Guest
+    event: Event
+}
 
 export async function getRsvp(eventId: string, id: string) {
   const rsvp = await dbEvent.rsvp.findFirst({
