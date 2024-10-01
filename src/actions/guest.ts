@@ -32,7 +32,7 @@ export interface OptionRsvp extends Rsvp {
 
 export const getRsvpOptions = async () => {
     const rsvp = await getRsvpForEvent("resdip79");
-    console.log(rsvp);    
+    //console.log(rsvp);    
 
     const options: OptionRsvp[] = rsvp.map((r) => {
         return {

@@ -70,6 +70,7 @@ export default {
         //user.perwakilan = "perwakilan google"; // bagaimana cara set mendapatkan perwakilan klo login dari google?
         //console.log("user", user);
         return true;
+       
       }
       return true;
     },
