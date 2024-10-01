@@ -133,7 +133,7 @@ const FormGuest = ({
               name="institution"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Jabatan</FormLabel>
+                  <FormLabel>Institusi</FormLabel>
                   <FormControl>
                     <Input placeholder="Ambassador..." {...field} />
                   </FormControl>

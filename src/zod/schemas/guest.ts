@@ -7,8 +7,7 @@ const emptyStringToNull = z
 export const guestSchema = z
   .object({
     id: z
-      .union([z.string().cuid().optional(), z.string().optional()])
-      .nullable(),
+      .union([z.string().cuid().optional(), z.string().optional()]),
     prefix: z.string().optional(),
     firstName: z.string().optional(),
     lastName: z.string().optional(),

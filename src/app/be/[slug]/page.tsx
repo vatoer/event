@@ -24,12 +24,14 @@ const UpdateResponsePage = async ({ params }: { params: { slug: string } }) => {
     );
   }
 
-  // if (user && !user.roles?.includes("USER")) {
-  //   console.log(user);
-  //   return (
-  //     <Unauthorized />
-  //   );
-  // }
+  console.log(user);
+
+  if (user && !user.roles?.includes("USER")) {
+    console.log(user);
+    return (
+      <Unauthorized />
+    );
+  }
 
   return (
     <div className="px-10 py-2 w-full">

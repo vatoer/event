@@ -22,7 +22,7 @@ const UpdateResponsePage = async ({ params }: { params: { slug: string } }) => {
     );
   }
 
-  if (user && !user.roles.includes("USER")) {
+  if (user && !user.roles?.includes("USER")) {
     return (
       <div>
         <h1>Not authorized, please contact Administrator</h1>

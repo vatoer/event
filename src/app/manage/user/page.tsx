@@ -11,7 +11,7 @@ const ManageUserPage = async () => {
 
   // check roles
   console.log(session.user.roles);
-  if (!session.user.roles.includes("ADMIN")) {
+  if (!session.user.roles?.includes("ADMIN")) {
     return <div>Not authorized</div>;
   }
 

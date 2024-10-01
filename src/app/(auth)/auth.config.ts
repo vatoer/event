@@ -67,8 +67,7 @@ export default {
           },
         });
         user.id = gUser.id;
-        //user.perwakilan = "perwakilan google"; // bagaimana cara set mendapatkan perwakilan klo login dari google?
-        //console.log("user", user);
+        user.roles = gUser.roles;
         return true;
        
       }

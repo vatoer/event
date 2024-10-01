@@ -20,13 +20,16 @@ import {
   Delete,
   Eye,
   Pencil,
+  Printer,
   Save,
+  Send,
   Trash,
   Trash2,
   Undo2,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
+import { on } from "events";
 
 // <https://github.com/TanStack/table/discussions/5051
 
@@ -356,14 +359,28 @@ export const PaginationControls = <T,>({
 // interface Aksi {
 //   aksi: "edit" | "delete" | "view";
 // }
+
+interface Aksi<T> {
+  aksi: Array<"edit" | "delete" | "view" | "print" | "email">;
+  handler: Array<(row: T) => void>;
+}
+
+
 export const KolomPilihanAksi = <T,>(
   info: CellContext<T, unknown>,
-  aksi: Array<"edit" | "delete" | "view">,
+  aksi: Array<"edit" | "delete" | "view" | "print" | "email">,
   isEditing?: boolean,
-  onEdit?: (row: Row<T>) => void,
-  onDelete?: (row: T) => void,
-  onView?: (row: T) => void
+  options?: {
+    onEdit?: (row: Row<T>) => void,
+    onDelete?: (row: T) => void,
+    onView?: (row: T) => void,
+    onPrint?: (row: T) => void,
+    onEmail?: (row: T) => void
+  }
 ) => {
+
+  const {  onEdit, onDelete, onView, onPrint, onEmail } = options || {};
+
   const handleOnClickEdit = () => {
     //console.log("Edit clicked");
     onEdit && onEdit(info.row);
@@ -378,6 +395,17 @@ export const KolomPilihanAksi = <T,>(
     //console.log("View clicked");
     onView && onView(info.row.original);
   };
+
+  const handleOnClickPrint = () => {
+    //console.log("Print clicked");
+    onPrint && onPrint(info.row.original);
+  };
+
+  const handleOnClickEmail = () => {
+    //console.log("Email clicked");
+    onEmail && onEmail(info.row.original);
+  };
+
   return (
     <>
       <div className="flex gap-2">
@@ -414,6 +442,29 @@ export const KolomPilihanAksi = <T,>(
                   onClick={handleOnClickView}
                 >
                   <Eye size={20} />
+                </Button>
+              );
+            case "print":
+              return (
+                <Button
+                  key={item}
+                  variant="secondary"
+                  size="sm"
+                  onClick={handleOnClickPrint}
+                >
+                  <Printer size={20} />
+                </Button>
+              );
+            
+            case "email":
+              return (
+                <Button
+                  key={item}
+                  variant="secondary"
+                  size="sm"
+                  onClick={handleOnClickEmail}
+                >
+                  <Send size={20} />
                 </Button>
               );
             default:

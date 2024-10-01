@@ -21,13 +21,13 @@ const UpdateResponsePage = async ({ params }: { params: { slug: string } }) => {
         <UserButton />
       </div>
       <h1 className="font-semibold text-2xl text-center">Check-in {eventId}</h1>
-      {user && !user.roles.includes("SCANNER") && (
+      {user && !user.roles?.includes("SCANNER") && (
         <div className="p-4">
           <h1>Not authorized, please contact Administrator</h1>
         </div>
       )}
 
-      {user && user.roles.includes("SCANNER") && (
+      {user && user.roles?.includes("SCANNER") && (
         <div className="flex flex-auto h-full w-full border ">
           <FormContainer rsvpOptions={rsvpOptions} />
         </div>

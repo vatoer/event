@@ -22,7 +22,9 @@ model User {
   image     String?
   roles     String[]
   createdAt DateTime @default(now()) @map("created_at")
+  createdBy String?  @map("created_by")
   updatedAt DateTime @updatedAt @map("updated_at")
+  updatedBy String?  @map("updated_by")
   Rsvp      Rsvp[]
 
   @@map("users")
@@ -39,8 +41,11 @@ model Guest {
   email       String?
   inviter     String?
   createdAt   DateTime @default(now()) @map("created_at")
+  createdBy   String?  @map("created_by") @default("system")
   updatedAt   DateTime @updatedAt @map("updated_at")
-  Rsvp        Rsvp[]
+  updatedBy   String?  @map("updated_by")
+
+  Rsvp Rsvp[]
 
   @@map("guests")
 }
@@ -82,13 +87,16 @@ model Rsvp {
   checkinBy           String?       @map("checkin_by")
   rsvpResponse        RsvpResponse? @map("rsvp_response")
   rsvpResponseUpdated RsvpResponse? @map("rsvp_response_updated")
-  note                String?       // email, phone, etc
+  note                String? // email, phone, etc
   responseUpdatedBy   String?       @map("response_updated_by") // jika diisi, maka dianggap diupdate oleh user backend
   responseUpdatedAt   DateTime?     @map("response_updated_at") // jika diisi, maka dianggap diupdate oleh user backend
   responseNote        String?       @map("response_note") // email, phone, etc
 
   createdAt DateTime @default(now()) @map("created_at")
+  createdBy String?  @map("created_by") @default("system")
   updatedAt DateTime @updatedAt @map("updated_at")
+  updatedBy String?  @map("updated_by")
 
+  @@unique([guestId, eventId])
   @@map("rsvps")
 }

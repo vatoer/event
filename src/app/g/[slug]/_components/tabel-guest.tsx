@@ -123,10 +123,13 @@ export const TabelGuest = ({
       cell: (info) =>
         KolomPilihanAksi<RsvpGuest>(
           info,
-          ["delete", "edit"],
+          ["delete", "edit","print"],
           isEditing,
-          handleEdit,
-          handleDelete
+          {
+            onDelete: handleDelete,
+            onEdit: handleEdit,
+            onPrint: handleView
+          }
         ),
       meta: { isKolomAksi: true, className: "w-[100px]" },
       enableSorting: false, // Disable sorting for this column
@@ -157,7 +160,7 @@ export const TabelGuest = ({
     }
   };
 
-  const handleView = (row: Guest) => {
+  const handleView = (row: RsvpGuest) => {
     //console.log("View row:", row);
     // Implement your view logic here
     // view pdf

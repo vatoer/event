@@ -32,7 +32,7 @@ const TabelUser = ({ data }: TabelUserProps) => {
               <td className="py-2 px-4 text-sm text-gray-700">{user.email}</td>
               <td className="py-2 px-4 text-sm text-gray-700">{user.name}</td>
               <td className="py-2 px-4 text-sm text-gray-700">
-                {user.roles.join(", ")}
+                {user.roles?.join(", ")}
               </td>
               <td><ButtonAddRole user={user} /></td>
             </tr>
