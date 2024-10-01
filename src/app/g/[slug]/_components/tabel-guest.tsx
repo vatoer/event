@@ -128,7 +128,7 @@ export const TabelGuest = ({
           {
             onDelete: handleDelete,
             onEdit: handleEdit,
-            onPrint: handleView
+            onPrint: handlePrint
           }
         ),
       meta: { isKolomAksi: true, className: "w-[100px]" },
@@ -160,10 +160,13 @@ export const TabelGuest = ({
     }
   };
 
-  const handleView = (row: RsvpGuest) => {
+  const handlePrint = (row: RsvpGuest) => {
     //console.log("View row:", row);
     // Implement your view logic here
     // view pdf
+    // link to pdf url
+    const url = `/undangan/${row.id}`;
+    window.open(url, "_blank");
   };
 
   const handleEdit = (row: Row<RsvpGuest>) => {
