@@ -39,8 +39,8 @@ const rsvpPage = async ({ params }: { params: { slug: string } }) => {
       <GuestWrapper guest={guest} blur={false} rsvp={rsvp} />
 
       {!user && <RsvpResponseWrapper rsvp={rsvp} />}
-      {user && user.roles.includes("SCANNER") && <FormCheckin rsvp={rsvp} />}
-      {user && !user.roles.includes("SCANNER") && (
+      {user && user.roles?.includes("SCANNER") && <FormCheckin rsvp={rsvp} />}
+      {user && !user.roles?.includes("SCANNER") && (
         <div className="p-4">
           <h1>Not authorized, please contact Administrator</h1>
         </div>

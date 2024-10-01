@@ -199,3 +199,11 @@ listen_addresses = '*'
 ```sh
 sudo systemctl restart postgresql
 ```
+
+## BACKUP AND RESTORE
+
+```sh
+pg_dump -U postgres -h localhost -p 5432 -F c -b -v -f event_backup.backup event_db
+
+pg_restore -U postgres -h localhost -p 5432 -d event_db -v event_backup.backup
+```
