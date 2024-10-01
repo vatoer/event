@@ -4,6 +4,7 @@ import FormContainer from "./_components/form-container";
 import { auth, signOut } from "@auth/auth";
 import { UserButton } from "@/components/user/user-button";
 import { Button } from "@/components/ui/button";
+import Unauthorized from "@/components/unauthorized";
 
 const UpdateResponsePage = async ({ params }: { params: { slug: string } }) => {
   const eventId = params.slug;
@@ -25,10 +26,7 @@ const UpdateResponsePage = async ({ params }: { params: { slug: string } }) => {
 
   if (user && !user.roles?.includes("USER")) {
     return (
-      <div>
-        <h1>Not authorized, please contact Administrator</h1>
-        <Button onClick={() => signOut({ redirectTo: "/login" })}>Login</Button>
-      </div>
+      <Unauthorized />
     );
   }
 
