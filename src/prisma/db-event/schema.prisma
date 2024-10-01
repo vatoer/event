@@ -91,7 +91,8 @@ model Rsvp {
   responseUpdatedBy   String?       @map("response_updated_by") // jika diisi, maka dianggap diupdate oleh user backend
   responseUpdatedAt   DateTime?     @map("response_updated_at") // jika diisi, maka dianggap diupdate oleh user backend
   responseNote        String?       @map("response_note") // email, phone, etc
-
+  invitationSentAt    DateTime?     @map("invitation_sent_at")
+  invitationSentBy    String?       @map("invitation_sent_by")@default("email")
   createdAt DateTime @default(now()) @map("created_at")
   createdBy String?  @map("created_by") @default("system")
   updatedAt DateTime @updatedAt @map("updated_at")

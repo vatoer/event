@@ -24,12 +24,14 @@ interface FormGuestProps {
   handleFormSubmitComplete?: (isSuccess: Boolean) => void;
   className?: string;
   guest?: Partial<Guest> | null;
+  eventId?: string;
 }
 const FormGuest = ({
   onCancel,
   handleFormSubmitComplete,
   className,
   guest,
+  eventId,
 }: FormGuestProps) => {
   console.log("guest passed from props", guest);
   const form = useForm<Guest>({
@@ -43,6 +45,7 @@ const FormGuest = ({
           profession: "",
           institution: "",
           email: "",
+          eventId: eventId ?? "",
         },
   });
 

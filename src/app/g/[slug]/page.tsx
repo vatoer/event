@@ -41,7 +41,7 @@ const UpdateResponsePage = async ({ params }: { params: { slug: string } }) => {
         <Search />
       </div>
       <h1 className="font-semibold text-lg">Guest Of Event {eventId}</h1>
-      <GuestContainer data={guest} />
+      <GuestContainer data={guest} eventId={eventId} />
     </div>
   );
 };

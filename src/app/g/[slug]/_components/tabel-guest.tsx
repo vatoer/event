@@ -1,5 +1,6 @@
 "use client";
 import { simpanDataGuest, RsvpGuest, deleteGuest } from "@/actions/guest";
+import { sendEmailInvitation } from "@/actions/sendmail";
 
 import ConfirmDialog from "@/components/confirm-dialog";
 import {
@@ -22,6 +23,7 @@ import {
   Table,
   useReactTable,
 } from "@tanstack/react-table";
+import { set } from "lodash";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ZodError } from "zod";
@@ -52,6 +54,8 @@ export const TabelGuest = ({
 
     return searchWords.every(
       (word) =>
+        row.id.toLowerCase().includes(word) ||
+        row.rsvpResponse?.toLowerCase().includes(word) ||
         row.guest.name?.toLowerCase().includes(word) ||
         row.guest.email?.toLowerCase().includes(word) ||
         row.guest.firstName?.toLowerCase().includes(word) ||
@@ -123,12 +127,13 @@ export const TabelGuest = ({
       cell: (info) =>
         KolomPilihanAksi<RsvpGuest>(
           info,
-          ["delete", "edit","print"],
+          ["delete", "edit","print","email"],
           isEditing,
           {
             onDelete: handleDelete,
             onEdit: handleEdit,
-            onPrint: handlePrint
+            onPrint: handlePrint,
+            onEmail: handleEmail,
           }
         ),
       meta: { isKolomAksi: true, className: "w-[100px]" },
@@ -137,6 +142,36 @@ export const TabelGuest = ({
   ];
 
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const [isConfirmSendEmailDialogOpen, setIsConfirmSendEmailDialogOpen] = useState(false);
+  
+
+  const handleEmail = async (row: RsvpGuest) => {
+    setOriginalData(row);
+    setIsConfirmSendEmailDialogOpen(true);
+    // const send = await sendEmailInvitation();
+    // if (send) {
+    //   console.log("Email dikirim");
+    //   toast.success("Email berhasil dikirim");
+    // } else {
+    //   console.log("Email tidak dikirim");
+    //   toast.error("Email gagal dikirim");
+    // }
+  };
+
+  const handleSendEmail = async () => {
+    if (!originalData) {
+      toast.error("Data tidak ditemukan");
+      return;
+    }
+    const send = await sendEmailInvitation(originalData);
+    if (send) {      
+      setIsConfirmSendEmailDialogOpen(false);
+      setOriginalData(null);
+      toast.success("Email berhasil dikirim");
+    } else {      
+      toast.error("Email gagal dikirim");
+    }
+  }
 
   const handleDelete = async (row: RsvpGuest) => {
     setIsConfirmDialogOpen(true);
@@ -184,6 +219,11 @@ export const TabelGuest = ({
     console.log("Cancelled!");
   };
 
+  const handleCancelSendEmail = () => {
+    setIsConfirmSendEmailDialogOpen(false);
+    console.log("Cancelled!");
+  };
+
   useEffect(() => {
     setData(initialData);
   }, [initialData]);
@@ -195,6 +235,12 @@ export const TabelGuest = ({
         frozenColumnCount={1}
         isEditing={isEditing}
         editableRowId={editableRowId}
+      />
+      <ConfirmDialog
+        message={`Apakah anda yakin mengirim email undangan ke ${originalData?.guest.firstName} ?`}
+        isOpen={isConfirmSendEmailDialogOpen}
+        onConfirm={handleSendEmail}
+        onCancel={handleCancelSendEmail}
       />
       <ConfirmDialog
         message={`Apakah anda yakin menghapus data ${originalData?.guest.firstName} ?`}

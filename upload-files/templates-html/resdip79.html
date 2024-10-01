@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            text-align: center;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .header img {
+            max-width: 100px;
+        }
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .content {
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+        .content p {
+            margin: 5px 0;
+        }
+        .details {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-top: 20px;
+            font-size: 12px;
+            color: #888;
+            border-top: 1px solid #ddd;
+            width: 100%; /* Ensure it stretches full width */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+        .footer .left {
+            text-align: left;
+            max-width: 40%; /* Limit the width to 50 percent of the container */
+        }
+
+        .footer .center {
+            text-align: center;
+            width: 30%; /* Limit the width to 50 percent of the container */
+        }
+        .footer .right {
+            text-align: right;
+            flex: 1; /* Allow flex items to grow */
+        }
+        .footer img {
+            max-width: 120px; /* Adjust the size of the QR code */
+            margin-left: 10px;
+        }
+        .disclaimer {
+           margin-top: 20px;
+           font-size: 10px;
+           color: #666;
+           text-align: center;
+           border-top: 1px solid #ddd;
+           padding-top: 10px;
+       }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://event.ambassade-indonesie.fr/images/logo-garuda.png" alt="Logo Garuda"> <!-- Replace with the actual path to the flag image -->
+        </div>
+        <div class="content">
+            <p>À l’occasion du 79ème Anniversaire de l’Indépendance de la République d’Indonésie le 17 août 2024</p>
+            <p>et</p>
+            <p>Le 79ème Anniversaire de la journée des Forces armées nationales indonésiennes le 5 octobre 2024</p>
+            <p>L’Ambassadeur de la République d’Indonésie auprès de la France, de Monaco, d’Andorre, et de l’UNESCO</p>
+            <p>S.E. Monsieur <strong>Mohamad OEMAR</strong> et Madame <strong>Dewi OEMAR</strong></p>
+            <p>prient</p>
+            <p><strong>${guestFullname}</strong></p>
+            <p>de leur faire l’honneur d’assister à la réception qui aura lieu</p>
+        </div>
+        <div class="details">
+            <p><strong>Le jeudi, 3 octobre 2024, à 19h00 – 21h00</strong></p>
+            <p>à l’hôtel InterContinental Paris Le Grand</p>
+        </div>
+        <div class="footer">
+            <div class="left">
+                <p>*Tenue de ville/uniforme</p>
+                <p>Accès d’entrée :<br>12 Bd des Capucines<br>75009 Paris</p>
+            </div>     
+            <div class="center"></div>
+            <div class="right">
+                <p>Veuillez scanner ce QR Code pour faire un RSVP ou cliquer sur le lien suivant.<p>
+                  <img src="https://event.ambassade-indonesie.fr/qr/${qrcode}" alt="QR Code" style="max-width: 100px; height: auto;">
+
+                <p><a href="https://event.ambassade-indonesie.fr/r/${qrcode}">https://event.ambassade-indonesie.fr/r/${qrcode}</a></p>
+
+                <p>Pour plus de renseignements : rsvp@ambassade-indonesie.fr</p>
+
+
+            </div>       
+        </div>       
+        <div class="disclaimer">
+            <p>Avertissement : Cet e-mail et son contenu sont destinés exclusivement au destinataire indiqué. Si vous n'êtes pas le destinataire prévu, veuillez en informer immédiatement l'expéditeur et supprimer cet e-mail. Toute consultation, utilisation, divulgation ou distribution non autorisée est interdite.</p>
+        </div>
+    </div>
+</body>
+</html>

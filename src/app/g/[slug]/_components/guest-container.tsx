@@ -9,9 +9,10 @@ import { RsvpGuest } from "@/data/guest";
 
 interface GuestContainerProps {
   data: RsvpGuest[];
+  eventId: string;
 }
 
-const GuestContainer = ({ data }: GuestContainerProps) => {
+const GuestContainer = ({ data,eventId }: GuestContainerProps) => {
   const [selectedOption, setSelectedOption] = useState<OptionRsvp | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [editableRow, setEditableRow] = useState<ZGuest | null>(null);
@@ -45,6 +46,7 @@ const GuestContainer = ({ data }: GuestContainerProps) => {
           onCancel={handleOnClose}
           handleFormSubmitComplete={handleFormSubmitComplete}
           guest={editableRow}
+          eventId={eventId}
         />
       </DialogFormGuest>
       <TabelGuest data={data} onEdit={onEdit} />

@@ -123,24 +123,27 @@ export const simpanDataGuest = async (
     const trans = await dbEvent.$transaction(async (db) => {
       const rsvpId = nanoid5();
       const fallbackId = nanoid();
+      const {eventId, ...guestData} = data;
       const guest = await db.guest.upsert({
         where: { id: data.id || fallbackId }, //if data.id is null or undefined, use fallbackId
-        create: { ...data, createdBy: byUser },
-        update: { ...data, updatedBy: byUser },
+        create: { ...guestData, createdBy: byUser },
+        update: { ...guestData, updatedBy: byUser },
       });
 
       const rsvp = await db.rsvp.upsert({
         where: {
-          guestId_eventId: { eventId: "resdip79", guestId: guest.id },
+          guestId_eventId: { eventId: data.eventId, guestId: guest.id },
         },
-        create: { id: rsvpId, eventId: "resdip79", guestId: guest.id },
+        create: { id: rsvpId, eventId: data.eventId, guestId: guest.id },
         update: { updatedBy: byUser, updatedAt: new Date() },
       });
 
       return { guest, rsvp };
     });
+    revalidatePath(`/g/${data.eventId}`);
     return { success: true, data: trans.guest };
   } catch (error) {
+    console.error(error);
     return { success: false, error: "Failed to save data" };
   }
 };

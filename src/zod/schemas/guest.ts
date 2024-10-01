@@ -25,6 +25,7 @@ export const guestSchema = z
       ),
     profession: z.string().optional(),
     institution: z.string().optional(),
+    eventId: z.string(),
   })
   .superRefine((data, ctx) => {
     if (data.firstName?.trim() === "" && data.lastName?.trim() === "") {
