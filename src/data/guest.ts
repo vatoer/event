@@ -75,7 +75,7 @@ export const checkInGuest = async (
     },
     data: {
       attending,
-      attendingAt: new Date(),
+      attendingAt: attending ? new Date() : null,
       checkinBy,
     },
     include: {

@@ -9,6 +9,10 @@ import {
   PUBLIC_ROUTES,
   DEFAULT_ROUTE_AFTER_LOGIN,
 } from "./route";
+import { Logger } from "tslog";
+
+
+const logger = new Logger();
 
 const { auth } = NextAuth(authConfig);
 
@@ -46,10 +50,10 @@ export default auth((req) => {
 
   // if the route is a public route or sub route, skip the middleware
   if (isPublicRoute) {
-    console.log("[MIDDLEWARE] Public Route");
+    logger.info("[MIDDLEWARE] Public Route");
     return;
   } else {
-    console.log("[MIDDLEWARE] Not Public Route");
+    logger.warn("[MIDDLEWARE] Not Public Route");
   }
 
   // if the route is an Auth route and is log in, redirect to the default route
@@ -60,13 +64,13 @@ export default auth((req) => {
     return;
   }
 
-  console.log("[Auth] Request URL:", req.url);
-  console.log("[MIDDLEWARE]", nextUrl.pathname);
-  console.log("[MIDDLEWARE PATHNAME]", nextUrl.pathname.split("/"));
+  logger.info("[Auth] Request URL:", req.url);
+  //console.log("[MIDDLEWARE]", nextUrl.pathname);
+  //console.log("[MIDDLEWARE PATHNAME]", nextUrl.pathname.split("/"));
 
   // if the route is not an Auth route and is not log in, redirect to the login page
   if (!isLoggedIn && !isPublicRoute) {
-    console.log("[MIDDLEWARE] Redirect to login");
+    logger.warn("[MIDDLEWARE] Redirect to login");
     return NextResponse.redirect(new URL("/login?callbackUrl="+nextUrl.pathname, nextUrl));
   }
   return;

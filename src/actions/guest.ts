@@ -14,6 +14,10 @@ export type { GuestWithRsvp, RsvpGuest };
 import { Guest as ZGuest } from "@/zod/schemas/guest";
 import { dbEvent } from "@/lib/db-event";
 import { customAlphabet } from "nanoid";
+import { Logger } from "tslog";
+const logger = new Logger();
+
+
 
 // Define an alphabet without '-' and '_'
 const alphabet =
@@ -105,7 +109,7 @@ export const setCheckIn = async (
 
   const checkin = await checkInGuest(rsvpId, attending, checkUserEmail.data);
   revalidatePath(`/r/${rsvpId}`);
-  console.log(checkin);
+  logger.info(checkin);
   return { success: true, data: checkin };
 };
 

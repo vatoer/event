@@ -5,6 +5,7 @@ import { Logger } from "tslog";
 import fs from "fs";
 import { RsvpGuest } from "@/data/guest";
 import { generateUndangan } from "@/lib/generate-undangan";
+import { z } from "zod";
 
 const logger = new Logger();
 
@@ -69,10 +70,21 @@ const port = 587;
 const senderEmail = "rsvp@ambassade-indonesie.fr";
 const senderPassword = process.env.EMAIL_PASSWORD || "your-email-password";
 
+// Define the schema for email using Zod
+// Define the schema for email using Zod
+const emailSchema = z.string().email();
+const emailsSchema = z.array(emailSchema);
+
 export const sendEmailInvitation = async (rsvpGuest: RsvpGuest) => {
   try {
+    // Split the recipient email string by delimiter (e.g., ';' or ',')
+    const recipientEmails = rsvpGuest.guest.email?.split(/[;,]/).map(email => email.trim());
+
+    // Validate the array of email addresses
+    emailsSchema.parse(recipientEmails);
+
     const guestFullname = `${rsvpGuest.guest.prefix} ${rsvpGuest.guest.firstName} ${rsvpGuest.guest.lastName}`;
-    const recipientEmail = "vatoer.ckplus@gmail.com";
+    const recipientEmail = `${rsvpGuest.guest.email}`;
     const subject = `Invitation à une réception diplomatique pour ${guestFullname}`;
     //const attachmentPath = "path/to/your/file.txt";
     const bcc = "komparis.subscription@gmail.com";
@@ -117,6 +129,7 @@ export const sendEmailInvitation = async (rsvpGuest: RsvpGuest) => {
     );
     return x;
   } catch (error) {
+    console.error(`Error sending email: ${error}`);
     return false;
   }
 };
