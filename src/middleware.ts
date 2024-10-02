@@ -11,10 +11,21 @@ import {
 } from "./route";
 import { Logger } from "tslog";
 
-
-const logger = new Logger();
+// Create a Logger instance with custom settings
+const logger = new Logger({
+  hideLogPositionForProduction: true,
+});
 
 const { auth } = NextAuth(authConfig);
+
+// Function to extract IP address
+const getIpAddress = (req: NextRequest): string => {
+  const xForwardedFor = req.headers.get("x-forwarded-for");
+  if (xForwardedFor) {
+    return xForwardedFor.split(",")[0].trim();
+  }
+  return req.ip || "";
+};
 
 function getCookieValue(
   cookieString: string,
@@ -69,9 +80,14 @@ export default auth((req) => {
   //console.log("[MIDDLEWARE PATHNAME]", nextUrl.pathname.split("/"));
 
   // if the route is not an Auth route and is not log in, redirect to the login page
+  // Extract and log the IP address
+  const ipAddress = getIpAddress(req);
+  logger.info(`Request from IP: ${ipAddress}`);
   if (!isLoggedIn && !isPublicRoute) {
     logger.warn("[MIDDLEWARE] Redirect to login");
-    return NextResponse.redirect(new URL("/login?callbackUrl="+nextUrl.pathname, nextUrl));
+    return NextResponse.redirect(
+      new URL("/login?callbackUrl=" + nextUrl.pathname, nextUrl)
+    );
   }
   return;
 });
