@@ -70,6 +70,7 @@ const FormContainer = ({ rsvpOptions }: FormContainerProps) => {
       <div className="flex-grow sm:hidden"></div>
       {selectedOption && (
         <GuestDetails
+          rsvp={selectedOption}
           guest={selectedOption.guest}
           attending={selectedOption.attending || false}
           className="block sm:hidden py-2"
@@ -86,6 +87,7 @@ const FormContainer = ({ rsvpOptions }: FormContainerProps) => {
       <div className="flex flex-col w-full items-center justify-center gap-2">
         {selectedOption && (
           <GuestDetails
+            rsvp={selectedOption}
             guest={selectedOption.guest}
             attending={selectedOption.attending || false}
             className="hidden sm:flex mt-36"
@@ -128,10 +130,12 @@ const FormContainer = ({ rsvpOptions }: FormContainerProps) => {
 };
 
 const GuestDetails = ({
+  rsvp,
   guest,
   attending,
   className,
 }: {
+  rsvp: Rsvp;
   guest: Guest;
   attending: boolean;
   className: string;
@@ -151,6 +155,18 @@ const GuestDetails = ({
         <h1 className="font-semibold text-2xl w-full text-center">{`${guest.firstName} ${guest.lastName}`}</h1>
         <h1 className="font-semibold text-lg w-full text-center">{`${guest.profession}`}</h1>
         <h1 className="font-semibold text-xl w-full text-center">{`${guest.institution}`}</h1>
+
+        
+
+
+        {rsvp.representedBy && (
+          <h1 className="font-semibold text-lg w-full text-center">{`Represented by: ${rsvp.representedBy}`}</h1>
+        )}
+
+        {rsvp.rsvpResponseUpdated && (
+          <h1 className="font-semibold text-lg w-full text-center">{`Notes: ${rsvp.note}`}</h1>
+        )}
+
       </div>
       {attending && (
         <div className="flex w-full items-center justify-center border-t py-2">
