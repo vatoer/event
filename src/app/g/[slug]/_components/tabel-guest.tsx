@@ -73,12 +73,12 @@ export const TabelGuest = ({
       footer: "#",
     },
     {
-        accessorKey: "id",
-        header: "id",
-        cell: (info) => info.getValue(),
-        footer: "id",
-        meta: { isCellEditable: false },
-      },
+      accessorKey: "id",
+      header: "id",
+      cell: (info) => info.getValue(),
+      footer: "id",
+      meta: { isCellEditable: false },
+    },
     {
       accessorKey: "guest.prefix",
       header: "Prefix",
@@ -104,30 +104,39 @@ export const TabelGuest = ({
       footer: "Profession",
     },
     {
-        accessorKey: "guest.institution",
-        header: "Institution",
-        cell: (info) => info.getValue(),
-        footer: "Institution",
+      accessorKey: "guest.institution",
+      header: "Institution",
+      cell: (info) => info.getValue(),
+      footer: "Institution",
+    },
+    {
+      accessorKey: "guest.email",
+      header: "email",
+      cell: (info) => info.getValue(),
+      footer: "email",
+    },
+    {
+      accessorKey: "rsvpResponse",
+      header: "response",
+      cell: (info) => info.getValue(),
+      footer: "response",
+    },
+    {
+      accessorKey: "attendingAt",
+      header: "Attending At",
+      cell: (info) => {
+        const value = info.getValue() as Date | null;
+        return value ? new Date(value).toLocaleTimeString(): "";
       },
-      {
-        accessorKey: "guest.email",
-        header: "email",
-        cell: (info) => info.getValue(),
-        footer: "email",
-      },
-      {
-        accessorKey: "rsvpResponse",
-        header: "response",
-        cell: (info) => info.getValue(),
-        footer: "response",
-      },
+      footer: "Attending At",
+    },
     {
       accessorKey: "_additionalKolomAksi",
       header: "Aksi",
       cell: (info) =>
         KolomPilihanAksi<RsvpGuest>(
           info,
-          ["delete", "edit","print","email"],
+          ["delete", "edit", "print", "email"],
           isEditing,
           {
             onDelete: handleDelete,
@@ -142,8 +151,8 @@ export const TabelGuest = ({
   ];
 
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
-  const [isConfirmSendEmailDialogOpen, setIsConfirmSendEmailDialogOpen] = useState(false);
-  
+  const [isConfirmSendEmailDialogOpen, setIsConfirmSendEmailDialogOpen] =
+    useState(false);
 
   const handleEmail = async (row: RsvpGuest) => {
     setOriginalData(row);
@@ -164,14 +173,14 @@ export const TabelGuest = ({
       return;
     }
     const send = await sendEmailInvitation(originalData);
-    if (send) {      
+    if (send) {
       setIsConfirmSendEmailDialogOpen(false);
       setOriginalData(null);
       toast.success("Email berhasil dikirim");
-    } else {      
+    } else {
       toast.error("Email gagal dikirim");
     }
-  }
+  };
 
   const handleDelete = async (row: RsvpGuest) => {
     setIsConfirmDialogOpen(true);
@@ -191,7 +200,9 @@ export const TabelGuest = ({
       console.log("Data dihapus");
     } else {
       console.log("Data tidak dihapus");
-      toast.error(`Data ${originalData.guest.firstName} gagal dihapus ${deleted.message}`);
+      toast.error(
+        `Data ${originalData.guest.firstName} gagal dihapus ${deleted.message}`
+      );
     }
   };
 

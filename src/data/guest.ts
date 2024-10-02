@@ -85,28 +85,29 @@ export const checkInGuest = async (
   return rsvp;
 };
 
-// export interface RsvpSummary {
-//     rsvp_response: RsvpResponse | "NOTRESPONDING";
-//     count: number;
-//   }
-//   export const getRsvpSummaryByResponse = async (eventId: string):Promise<RsvpSummary[]> => {
 
-//       const result = await dbEvent.$queryRaw<RsvpSummary[]>`
-//       SELECT
-//         CASE
-//           WHEN rsvp_response IS NULL THEN 'NOTRESPONDING'
-//           ELSE rsvp_response::text
-//         END AS rsvp_response,
-//         COUNT(*) AS count
-//       FROM
-//         public.rsvps
-//       WHERE
-//         event_id = 'resdip79' -- Replace with the actual event ID
-//       GROUP BY
-//         CASE
-//           WHEN rsvp_response IS NULL THEN 'NOTRESPONDING'
-//           ELSE rsvp_response::text
-//         END;
-//       `
-//       return result;
-//   }
+export interface CheckinSummary {
+  checkin: "ATTENDING" | "NOTATTENDING";
+  count: number;
+}
+export const getSumCheckin = async (eventId: string):Promise<CheckinSummary[]> => {
+
+    const result = await dbEvent.$queryRaw<CheckinSummary[]>`
+    SELECT 
+      CASE 
+        WHEN attending = true THEN 'ATTENDING' 
+        ELSE 'NOTATTENDING'
+      END AS checkin, 
+      COUNT(*) AS count 
+    FROM 
+      public.rsvps 
+    WHERE 
+      event_id = 'resdip79' -- Replace with the actual event ID
+    GROUP BY 
+      CASE 
+         WHEN attending = true THEN 'ATTENDING' 
+        ELSE 'NOTATTENDING'
+      END;
+    `
+    return result;
+}
