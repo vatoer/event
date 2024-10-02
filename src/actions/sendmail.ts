@@ -129,7 +129,7 @@ export const sendEmailInvitation = async (rsvpGuest: RsvpGuest) => {
     );
     return x;
   } catch (error) {
-    console.error(`Error sending email: ${error}`);
+    logger.error(`Error sending email: ${error}`);
     return false;
   }
 };
